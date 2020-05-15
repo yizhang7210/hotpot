@@ -16,9 +16,8 @@ public class ServiceController {
 
     private final ServiceUseCase serviceUseCase;
 
-    @GetMapping("/services")
+    @GetMapping("${hotpot.web-api.base-url}/services")
     public ResponseEntity<List<ServiceId>> getServiceIds() {
-
         return ResponseEntity.ok(serviceUseCase.getServiceIds(Function.identity()));
     }
 

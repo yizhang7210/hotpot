@@ -8,12 +8,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 @Slf4j
+@Configuration
+@ConditionalOnProperty(value = "hotpot.web-api.enabled", havingValue = "true", matchIfMissing = true)
 public class ControllerConfiguration {
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.web-api.enabled", havingValue = "true", matchIfMissing = true)
     public ServiceController serviceController(ServiceUseCase serviceUseCase) {
         LoggingUtils.logBeanName(log, ServiceController.class);
         return new ServiceController(serviceUseCase);

@@ -1,5 +1,6 @@
 package com.hotpot.presentation.configurations;
 
+import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.presentation.api.ServiceController;
 import com.hotpot.utils.LoggingUtils;
@@ -14,9 +15,12 @@ import org.springframework.context.annotation.Configuration;
 public class ControllerConfiguration {
 
     @Bean
-    public ServiceController serviceController(ServiceUseCase serviceUseCase) {
+    public ServiceController serviceController(
+            ServiceUseCase serviceUseCase,
+            ServiceTransformer serviceTransformer
+    ) {
         LoggingUtils.logBeanName(log, ServiceController.class);
-        return new ServiceController(serviceUseCase);
+        return new ServiceController(serviceUseCase, serviceTransformer);
     }
 
 }

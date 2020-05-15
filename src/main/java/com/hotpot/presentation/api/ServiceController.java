@@ -1,7 +1,8 @@
 package com.hotpot.presentation.api;
 
+import com.hotpot.application.dtos.ServiceDto;
+import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceUseCase;
-import com.hotpot.domain.Service;
 import com.hotpot.domain.ServiceId;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 public class ServiceController {
 
     private final ServiceUseCase serviceUseCase;
+    private final ServiceTransformer serviceTransformer;
 
     @GetMapping("${hotpot.web-api.base-url}/services")
     public ResponseEntity<List<ServiceId>> getServiceIds() {
@@ -24,8 +26,8 @@ public class ServiceController {
     }
 
     @GetMapping("${hotpot.web-api.base-url}/services/{serviceId}")
-    public ResponseEntity<Service> getServiceById(@PathVariable("serviceId") String serviceId) {
-        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), Function.identity()));
+    public ResponseEntity<ServiceDto> getServiceById(@PathVariable("serviceId") String serviceId) {
+        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toServiceDTO));
     }
 
 }

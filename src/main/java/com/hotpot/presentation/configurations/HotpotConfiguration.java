@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Import;
 
 
 @Configuration
-@Import({ControllerConfiguration.class, UseCaseConfiguration.class })
+@Import({
+        ControllerConfiguration.class,
+        UseCaseConfiguration.class,
+        DefaultBeanConfiguration.class
+})
 public class HotpotConfiguration {
 
 }

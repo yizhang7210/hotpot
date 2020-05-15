@@ -1,17 +1,22 @@
-package com.hotpot.configurations;
+package com.hotpot.presentation.configurations;
 
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.presentation.api.ServiceController;
+import com.hotpot.utils.LoggingUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Slf4j
 public class ControllerConfiguration {
 
     @Bean
+    @ConditionalOnProperty(value = "hotpot.web-api.enabled", havingValue = "true", matchIfMissing = true)
     public ServiceController serviceController(ServiceUseCase serviceUseCase) {
+        LoggingUtils.logBeanName(log, ServiceController.class);
         return new ServiceController(serviceUseCase);
     }
-
 
 }

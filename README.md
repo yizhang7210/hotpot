@@ -1,1 +1,1 @@
-# hotpot
+# com.hotpot

@@ -1,8 +1,11 @@
 package com.hotpot.domain;
 
-import lombok.Value;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@Value
+@Data
+@RequiredArgsConstructor
 public class Service {
-    private ServiceId id;
+    private final ServiceId id;
+    private ServiceMetaData metaData;
 }

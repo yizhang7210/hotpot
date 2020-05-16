@@ -1,11 +1,15 @@
 package com.hotpot.domain;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 public class Service {
     private final ServiceId id;
     private ServiceMetaData metaData;
+
+    public Service(ServiceId serviceId) {
+        this.id = serviceId;
+        this.metaData = ServiceMetaData.builder().build();
+    }
+
 }

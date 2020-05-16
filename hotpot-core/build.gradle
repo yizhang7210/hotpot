@@ -7,6 +7,26 @@ buildscript {
 plugins {
     id 'java-library'
     id 'idea'
+    id 'maven-publish'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/yizhang7210/hotpot")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from(components["java"])
+            artifactId = project.name
+        }
+    }
 }
 
 repositories {

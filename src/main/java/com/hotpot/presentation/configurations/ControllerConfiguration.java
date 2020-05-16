@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Configuration;
 public class ControllerConfiguration {
 
     @Bean
-    public ServiceController serviceController(
+    public <T> ServiceController<T> serviceController(
             ServiceUseCase serviceUseCase,
-            ServiceTransformer serviceTransformer
+            ServiceTransformer<T> serviceTransformer
     ) {
         LoggingUtils.logBeanName(log, ServiceController.class);
-        return new ServiceController(serviceUseCase, serviceTransformer);
+        return new ServiceController<>(serviceUseCase, serviceTransformer);
     }
 
 }

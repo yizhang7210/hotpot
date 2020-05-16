@@ -19,7 +19,7 @@ public class ServiceController<T> {
     private final ServiceUseCase serviceUseCase;
     private final ServiceTransformer<T> serviceTransformer;
 
-    @GetMapping("${hotpot.web-api.base-url}/services")
+    @GetMapping("${hotpot.web-api.base-url}/serviceIds")
     public ResponseEntity<List<ServiceId>> getServiceIds() {
         return ResponseEntity.ok(serviceUseCase.getServiceIds(Function.identity()));
     }
@@ -28,5 +28,11 @@ public class ServiceController<T> {
     public ResponseEntity<T> getServiceById(@PathVariable("serviceId") String serviceId) {
         return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toDTO));
     }
+
+    @GetMapping("${hotpot.web-api.base-url}/services")
+    public ResponseEntity<List<T>> getServices() {
+        return ResponseEntity.ok(serviceUseCase.getServices(serviceTransformer::toDTO));
+    }
+
 
 }

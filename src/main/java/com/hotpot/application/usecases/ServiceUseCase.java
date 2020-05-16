@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -35,5 +36,22 @@ public class ServiceUseCase {
         }
 
         return transformer.apply(service);
+    }
+
+    public <T> List<T> getServices(Function<Service, T> transformer) {
+
+        Map<ServiceId, Service> services = serviceIdentityProvider
+                .getServiceIds()
+                .stream()
+                .collect(Collectors.toMap(Function.identity(), Service::new));
+
+        serviceMetaDataProviders.sort(Comparator.comparingInt(mdp -> mdp.getPrecedence().getValue()));
+
+        for (ServiceMetaDataProvider mdp : serviceMetaDataProviders) {
+            mdp.getMetaDataByIds(services.keySet())
+                    .forEach((sid, sMetaData) -> services.get(sid).setMetaData(sMetaData));
+        }
+
+        return services.values().stream().map(transformer).collect(Collectors.toList());
     }
 }

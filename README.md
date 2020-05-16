@@ -10,7 +10,7 @@ respective systems.
 
 These functionalities are then served via a default set of web APIs.
 
-An example Hotpot app see: https://github.com/yizhang7210/hotpotapp
+An example Hotpot app is at the `hotpot-app` folder.
 
 
 ## Getting started

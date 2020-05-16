@@ -1,0 +1,9 @@
+# Spring
+server:
+  port: 8090
+
+# Hotpot
+hotpot:
+  web-api:
+    base-url: "v1"
+    enabled: true

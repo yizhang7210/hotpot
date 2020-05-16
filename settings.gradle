@@ -1,1 +1,3 @@
 rootProject.name = "hotpot"
+include 'hotpot-core'
+include 'hotpot-app'

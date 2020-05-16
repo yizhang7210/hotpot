@@ -14,12 +14,18 @@ plugins {
 
 repositories {
     mavenCentral()
+    // TODO: Move to jcenter once this is sync'ed
+    maven { url "https://dl.bintray.com/yizhang7210/hotpot" }
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
 
+    // Use the source version from the project, uncomment this line
     implementation project(":hotpot-core")
+
+    // Use the published version, uncomment this line
+    // implementation "com.hotpot:hotpot-core:${version}"
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation "org.spockframework:spock-core:1.3-groovy-2.5"

@@ -13,6 +13,20 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_12
+    targetCompatibility = JavaVersion.VERSION_12
+}
+
+jar {
+    manifest {
+        attributes(
+            "Implementation-Title": project.name,
+            "Implementation-Version": archiveVersion
+        )
+    }
+}
+
 dependencies {
     implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.4.RELEASE")
     implementation "org.springframework.boot:spring-boot-starter"

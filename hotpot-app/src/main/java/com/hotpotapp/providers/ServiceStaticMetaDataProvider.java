@@ -25,7 +25,7 @@ public class ServiceStaticMetaDataProvider implements ServiceMetaDataProvider {
             .channel(Channel.of(serviceName + "-channel"))
             .currentVersion(Version.of(serviceName + "-version"))
             .owner(Team.of(TeamName.of(serviceName + "-team")))
-            .tier(Tiers.Tier_1.getTier())
+            .tier(getTier(serviceId).getTier())
             .selfLocation(Location.of(serviceName + ".com"))
             .docsLocation(Location.of(serviceName + ".com/docs"))
             .metricsLocation(Location.of(serviceName + ".com/metrics"))
@@ -35,6 +35,18 @@ public class ServiceStaticMetaDataProvider implements ServiceMetaDataProvider {
     @Override
     public Precedence getPrecedence() {
         return Precedence.of(1);
+    }
+
+    private Tiers getTier(ServiceId serviceId) {
+        switch (serviceId.getValue().length() % 3) {
+            case 0:
+                return Tiers.Tier_1;
+            case 1:
+                return Tiers.Tier_2;
+            case 2:
+                return Tiers.Tier_3;
+        }
+        return Tiers.Tier_3;
     }
 
 }

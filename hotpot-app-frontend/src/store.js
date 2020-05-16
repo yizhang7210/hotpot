@@ -18,7 +18,6 @@ export default new Vuex.Store({
 	actions: {
 		async fetchAllServices(context) {
 			const services = await http.get('v1/services');
-			console.log(services);
 			context.commit('updateServices', services.data);
     }
 	}

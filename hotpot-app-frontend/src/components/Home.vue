@@ -1,9 +1,7 @@
 <template>
     <div class="home">
-        <div class="services">
-            <ServiceList
-                    :services="this.$store.state.services"/>
-        </div>
+        <ServiceList
+                :services="this.$store.state.services"/>
     </div>
 </template>
 
@@ -16,7 +14,6 @@
       ServiceList
     },
     mounted() {
-      console.log("mounttee");
       this.$store.dispatch('fetchAllServices');
     },
   }
@@ -28,11 +25,11 @@
         flex-direction: column;
         flex: 1;
         max-width: 100vw;
-        max-height: 100vh;
+        max-height: 150vh;
         margin-bottom: $small-margin;
     }
 
-    .services {
+    .service-list {
         display: flex;
         flex: 1;
     }

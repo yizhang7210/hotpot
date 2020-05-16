@@ -18,9 +18,7 @@ public class SimpleServiceTransformer implements ServiceTransformer<SimpleServic
             service.getMetaData().getTier().map(Tier::getValue).orElse(null),
             service.getMetaData().getOwner().map(o -> o.getName().getValue()).orElse(null),
             service.getMetaData().getChannel().map(Channel::getValue).orElse(null),
-            service.getMetaData().getCurrentVersion().map(Version::getValue).orElse(null),
-            service.getMetaData().getDocsLocation().map(Location::getValue).orElse(null),
-            service.getMetaData().getCurrentOnCallTeam().map(t -> t.getName().getValue()).orElse(null)
+            service.getMetaData().getCurrentVersion().map(Version::getValue).orElse(null)
         );
     }
 }

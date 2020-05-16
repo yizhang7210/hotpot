@@ -10,6 +10,4 @@ public class SimpleServiceDto {
     private final String owner;
     private final String channel;
     private final String version;
-    private final String docs;
-    private final String onCallTeam;
 }

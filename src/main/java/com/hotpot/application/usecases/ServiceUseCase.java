@@ -20,9 +20,9 @@ public class ServiceUseCase {
 
     public <T> List<T> getServiceIds(Function<ServiceId, T> transformer) {
         return serviceIdentityProvider.getServiceIds()
-                .stream()
-                .map(transformer)
-                .collect(Collectors.toList());
+            .stream()
+            .map(transformer)
+            .collect(Collectors.toList());
     }
 
     public <T> T getServiceById(ServiceId serviceId, Function<Service, T> transformer) {
@@ -41,15 +41,15 @@ public class ServiceUseCase {
     public <T> List<T> getServices(Function<Service, T> transformer) {
 
         Map<ServiceId, Service> services = serviceIdentityProvider
-                .getServiceIds()
-                .stream()
-                .collect(Collectors.toMap(Function.identity(), Service::new));
+            .getServiceIds()
+            .stream()
+            .collect(Collectors.toMap(Function.identity(), Service::new));
 
         serviceMetaDataProviders.sort(Comparator.comparingInt(mdp -> mdp.getPrecedence().getValue()));
 
         for (ServiceMetaDataProvider mdp : serviceMetaDataProviders) {
             mdp.getMetaDataByIds(services.keySet())
-                    .forEach((sid, sMetaData) -> services.get(sid).setMetaData(sMetaData));
+                .forEach((sid, sMetaData) -> services.get(sid).setMetaData(sMetaData));
         }
 
         return services.values().stream().map(transformer).collect(Collectors.toList());

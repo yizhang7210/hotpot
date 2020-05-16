@@ -15,8 +15,8 @@ public interface ServiceMetaDataProvider {
 
     default Map<ServiceId, ServiceMetaData> getMetaDataByIds(Collection<ServiceId> serviceIds) {
         return serviceIds
-                .stream()
-                .collect(Collectors.toMap(Function.identity(), this::getMetaDataById));
+            .stream()
+            .collect(Collectors.toMap(Function.identity(), this::getMetaDataById));
     }
 
     Precedence getPrecedence();

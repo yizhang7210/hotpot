@@ -24,8 +24,8 @@ public class Precedence {
     static class PrecedenceOutOfRangeError extends RuntimeException {
         public PrecedenceOutOfRangeError(int value) {
             super(String.format(
-                    "OverrideOrder out of range. It should be between %d and %d. Not %d.",
-                    LOWEST, HIGHEST, value)
+                "OverrideOrder out of range. It should be between %d and %d. Not %d.",
+                LOWEST, HIGHEST, value)
             );
         }
     }

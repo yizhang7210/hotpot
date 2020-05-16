@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-        ControllerConfiguration.class,
-        UseCaseConfiguration.class,
-        DefaultBeanConfiguration.class
+    ControllerConfiguration.class,
+    UseCaseConfiguration.class,
+    DefaultBeanConfiguration.class
 })
 public class HotpotConfiguration {
 

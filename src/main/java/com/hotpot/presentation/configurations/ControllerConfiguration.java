@@ -16,8 +16,8 @@ public class ControllerConfiguration {
 
     @Bean
     public <T> ServiceController<T> serviceController(
-            ServiceUseCase serviceUseCase,
-            ServiceTransformer<T> serviceTransformer
+        ServiceUseCase serviceUseCase,
+        ServiceTransformer<T> serviceTransformer
     ) {
         LoggingUtils.logBeanName(log, ServiceController.class);
         return new ServiceController<>(serviceUseCase, serviceTransformer);

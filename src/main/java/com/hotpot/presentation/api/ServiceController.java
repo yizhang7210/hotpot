@@ -1,6 +1,5 @@
 package com.hotpot.presentation.api;
 
-import com.hotpot.application.dtos.ServiceDto;
 import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.ServiceId;
@@ -15,10 +14,10 @@ import java.util.function.Function;
 
 @Controller
 @AllArgsConstructor
-public class ServiceController {
+public class ServiceController<T> {
 
     private final ServiceUseCase serviceUseCase;
-    private final ServiceTransformer serviceTransformer;
+    private final ServiceTransformer<T> serviceTransformer;
 
     @GetMapping("${hotpot.web-api.base-url}/services")
     public ResponseEntity<List<ServiceId>> getServiceIds() {
@@ -26,8 +25,8 @@ public class ServiceController {
     }
 
     @GetMapping("${hotpot.web-api.base-url}/services/{serviceId}")
-    public ResponseEntity<ServiceDto> getServiceById(@PathVariable("serviceId") String serviceId) {
-        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toServiceDTO));
+    public ResponseEntity<T> getServiceById(@PathVariable("serviceId") String serviceId) {
+        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toDTO));
     }
 
 }

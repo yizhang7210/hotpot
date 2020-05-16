@@ -2,6 +2,7 @@ package com.hotpot.presentation.configurations;
 
 import com.hotpot.application.defaults.DefaultServiceTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
+import com.hotpot.domain.Service;
 import com.hotpot.utils.LoggingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,7 +15,7 @@ public class DefaultBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(ServiceTransformer.class)
-    public ServiceTransformer serviceTransformer() {
+    public ServiceTransformer<Service> serviceTransformer() {
         LoggingUtils.logBeanName(log, DefaultServiceTransformer.class);
         return new DefaultServiceTransformer();
     }

@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class Tier {
-    String value;
-    String description;
+    private final String value;
+    private final String description;
 }

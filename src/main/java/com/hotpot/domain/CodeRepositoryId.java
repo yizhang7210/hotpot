@@ -5,5 +5,5 @@ import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class CodeRepositoryId {
-    String value;
+    private final String value;
 }

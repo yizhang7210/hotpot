@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Service {
     private final ServiceId id;
-    private ServiceMetaData metaData;
+    private final ServiceMetaData metaData;
 
     public Service(ServiceId serviceId) {
         this.id = serviceId;

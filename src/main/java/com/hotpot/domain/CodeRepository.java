@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class CodeRepository {
-    private CodeRepositoryId repositoryId;
-    private Location location;
+    private final CodeRepositoryId repositoryId;
+    private final Location location;
 }

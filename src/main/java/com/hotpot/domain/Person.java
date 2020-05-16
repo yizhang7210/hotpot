@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class Person {
-    private String name;
-    private TeamName team;
+    private final String name;
+    private final TeamName team;
 }

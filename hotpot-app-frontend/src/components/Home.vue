@@ -1,7 +1,6 @@
 <template>
     <div class="home">
-        <ServiceList
-                :services="this.$store.state.services"/>
+        <ServiceList :services="this.$store.state.services"/>
     </div>
 </template>
 

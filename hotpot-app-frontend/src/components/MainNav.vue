@@ -1,6 +1,6 @@
 <template>
   <b-navbar class="main-nav" type="dark" variant="info">
-    <b-navbar-brand to="/home"> Hotpot App </b-navbar-brand>
+    <b-navbar-brand to="/home"> Hotpot Demo </b-navbar-brand>
   </b-navbar>
 </template>
 

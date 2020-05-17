@@ -3,14 +3,13 @@
         <b-form-input
                 v-model="filter"
                 type="search"
-                class="search"
+                class="services-search"
                 placeholder="Type to Search"
         />
         <b-table
                 class="services-table"
                 striped
                 hover
-                bordered
                 responsive="true"
                 sticky-header="100vh"
                 :current-page="currentPage"
@@ -69,14 +68,16 @@
         flex: 1;
         overflow: auto;
         align-self: center;
+        width: 100%;
     }
     .services-table {
         align-self: center;
+        width: $main-section-max-width;
     }
-    .search {
+    .services-search {
         display: flex;
         align-self: center;
-        max-width: $main-section-max-width;
+        width: $main-section-max-width;
         margin: $small-margin 0;
     }
 </style>

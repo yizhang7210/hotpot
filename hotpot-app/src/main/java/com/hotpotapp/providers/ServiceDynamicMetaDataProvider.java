@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class ServiceDynamicMetaDataProvider implements ServiceMetaDataProvider {
 
-    private static final Team ON_CALL_TEAM = Team.of(TeamName.of("The Team"));
+    private static final Team ON_CALL_TEAM = Team.of(TeamName.of("The on-call team"));
 
     @Override
     public ServiceMetaData getMetaDataById(ServiceId serviceId) {

@@ -1,13 +1,15 @@
 <template>
     <div class="service-details">
-        <p class="service-title">Service Details</p>
+        <p class="service-title">{{ this.$route.params.sid }}</p>
         <div class="service-details-list">
             <dl class="service-detail" v-for="detail in this.details" :key="detail.key">
                 <dt>
                     {{detail.display}}
                 </dt>
                 <dd>
-                    <span v-bind:class="{warning: !detail.value}"> {{ detail.value || 'Not Available'}} </span>
+                    <span v-bind:class="{warning: !detail.value}">
+                        {{ detail.value || 'Not Available'}}
+                    </span>
                 </dd>
             </dl>
         </div>
@@ -35,16 +37,12 @@
 
         this.details = [
           {
-            key: "id",
-            display: "Service Name",
-            value: response.data.id.value
-          }, {
             key: "tier",
             display: "Tier",
             value: metaData.tier && `Tier ${metaData.tier.value}`
           }, {
             key: "owner",
-            display: "Service Owner",
+            display: "Owner",
             value: metaData.owner && metaData.owner.name && metaData.owner.name.value
           }, {
             key: "channel",

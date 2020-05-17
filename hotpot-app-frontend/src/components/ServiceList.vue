@@ -1,5 +1,5 @@
 <template>
-    <div class="services-container">
+    <div class="service-list">
         <b-form-input
                 v-model="filter"
                 type="search"
@@ -19,6 +19,7 @@
                 :fields="fields"
                 :items="services"
                 @filtered="onFiltered"
+                @row-clicked="onRowClicked"
         />
         <b-pagination
                 v-model="currentPage"
@@ -57,12 +58,15 @@
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length;
         this.currentPage = 1;
+      },
+      onRowClicked(item) {
+        this.$router.push(`/services/${item.id}`);
       }
     },
   }
 </script>
 <style scoped lang="scss">
-    .services-container {
+    .service-list {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -70,10 +74,13 @@
         align-self: center;
         width: 100%;
     }
+
     .services-table {
         align-self: center;
         width: $main-section-max-width;
+        cursor: pointer;
     }
+
     .services-search {
         display: flex;
         align-self: center;

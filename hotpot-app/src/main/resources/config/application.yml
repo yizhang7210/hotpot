@@ -7,3 +7,5 @@ hotpot:
   web-api:
     base-url: "v1"
     enabled: true
+  slo:
+    enabled: true

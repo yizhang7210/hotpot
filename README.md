@@ -22,10 +22,19 @@ An example Hotpot app is at the `hotpot-app` folder.
       web-api:
         enabled: <enabled>    # default: true. Web API endpoints will be exposed.
         base-url: <base-url>  # default: "". Web API endpoints will be exposed at the subpath of <base-url>
+
+      slo:
+        enabled: <enabled>    # default: false. Enable exposing service level objectives.
     ```
-1. Implement the following interfaces:
+1. Create beans that implement the following interfaces:
     ```
     - ServiceIdentityProvider: to provide all the service identifiers
-    - ServiceMetaDataProvider: to provide metadata given a service identifier
-    - ServiceTransformer (optional): to transform a service object to a data transfer object for the API response
+    - ServiceMetaDataProvider (can be multiple): to provide metadata given a service identifier
+    - ServiceTransformer (optional): to transform a service object to a data transfer object (DTO) for the API response
+    ```
+1. If `hotpot.slo.enabled` is true, then create bean that implement the following interfaces:
+    ```yaml
+    - ServiceObjective (can be multiple): to define a service level objective
+    - ServiceObjectiveProvider: to provide all the service level objectives
+    - ServiceObjectiveTransformer (optional): to transform a service objective object to a DTO for the API response
     ```

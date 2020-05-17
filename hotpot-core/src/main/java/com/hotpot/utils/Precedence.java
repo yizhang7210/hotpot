@@ -1,5 +1,6 @@
 package com.hotpot.utils;
 
+import com.hotpot.domain.exceptions.UserError;
 import lombok.Getter;
 
 @Getter
@@ -21,7 +22,7 @@ public class Precedence {
         throw new PrecedenceOutOfRangeError(value);
     }
 
-    static class PrecedenceOutOfRangeError extends RuntimeException {
+    static class PrecedenceOutOfRangeError extends UserError {
         public PrecedenceOutOfRangeError(int value) {
             super(String.format(
                 "OverrideOrder out of range. It should be between %d and %d. Not %d.",

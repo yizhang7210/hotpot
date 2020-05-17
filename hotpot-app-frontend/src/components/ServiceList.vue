@@ -1,11 +1,14 @@
 <template>
-    <div class="service-list">
-        <b-form-input
-                v-model="filter"
-                type="search"
-                class="services-search"
-                placeholder="Type to Search"
-        />
+    <div class="services-list">
+        <div class="services-header">
+            <p class="services-title">Services</p>
+            <b-form-input
+                    v-model="filter"
+                    type="search"
+                    class="services-search"
+                    placeholder="Type to search service"
+            />
+        </div>
         <b-table
                 class="services-table"
                 striped
@@ -66,7 +69,7 @@
   }
 </script>
 <style scoped lang="scss">
-    .service-list {
+    .services-list {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -74,17 +77,23 @@
         align-self: center;
         width: 100%;
     }
-
     .services-table {
         align-self: center;
         width: $main-section-max-width;
         cursor: pointer;
     }
-
-    .services-search {
+    .services-header {
         display: flex;
         align-self: center;
+        align-items: center;
         width: $main-section-max-width;
-        margin: $small-margin 0;
+    }
+    .services-title {
+        margin: $small-margin;
+        font-size: $section-title-font-size;
+        flex: 1;
+    }
+    .services-search {
+        flex: 1;
     }
 </style>

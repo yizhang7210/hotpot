@@ -11,11 +11,12 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class EmptyServiceIdentityProvider implements ServiceIdentityProvider {
+public class DemoServiceIdentityProvider implements ServiceIdentityProvider {
 
     @Override
     public Collection<ServiceId> getServiceIds() {
         return List.of(
+            ServiceId.of("empty-service"),
             ServiceId.of("first-service"),
             ServiceId.of("second-service"),
             ServiceId.of("third-service"),

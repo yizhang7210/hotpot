@@ -15,7 +15,7 @@ public class DefaultBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(ServiceTransformer.class)
-    public ServiceTransformer<Service> serviceTransformer() {
+    public ServiceTransformer<Service, Service> serviceTransformer() {
         LoggingUtils.logBeanName(log, DefaultServiceTransformer.class);
         return new DefaultServiceTransformer();
     }

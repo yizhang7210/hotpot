@@ -6,9 +6,7 @@
 
 <script>
 export default {
-  name: 'MainNav',
-  computed: {},
-  mounted() {},
+  name: 'MainNav'
 }
 </script>
 
@@ -17,6 +15,7 @@ export default {
   display: flex;
   justify-content: space-between;
   background-color: $primary-color !important;
+  margin-bottom: $small-margin;
 }
 .buttons {
   display: flex;

@@ -14,25 +14,24 @@ import java.util.function.Function;
 
 @Controller
 @AllArgsConstructor
-public class ServiceController<T> {
+public class ServiceController<U, V> {
 
     private final ServiceUseCase serviceUseCase;
-    private final ServiceTransformer<T> serviceTransformer;
+    private final ServiceTransformer<U, V> serviceTransformer;
 
     @GetMapping("${hotpot.web-api.base-url}/serviceIds")
     public ResponseEntity<List<ServiceId>> getServiceIds() {
         return ResponseEntity.ok(serviceUseCase.getServiceIds(Function.identity()));
     }
 
-    @GetMapping("${hotpot.web-api.base-url}/services/{serviceId}")
-    public ResponseEntity<T> getServiceById(@PathVariable("serviceId") String serviceId) {
-        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toDTO));
-    }
-
     @GetMapping("${hotpot.web-api.base-url}/services")
-    public ResponseEntity<List<T>> getServices() {
-        return ResponseEntity.ok(serviceUseCase.getServices(serviceTransformer::toDTO));
+    public ResponseEntity<List<U>> getServices() {
+        return ResponseEntity.ok(serviceUseCase.getServices(serviceTransformer::toDto));
     }
 
+    @GetMapping("${hotpot.web-api.base-url}/services/{serviceId}")
+    public ResponseEntity<V> getServiceById(@PathVariable("serviceId") String serviceId) {
+        return ResponseEntity.ok(serviceUseCase.getServiceById(ServiceId.of(serviceId), serviceTransformer::toDetailedDto));
+    }
 
 }

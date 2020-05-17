@@ -20,6 +20,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   display: flex;
   flex: 1;
+  max-width: 100vw;
   flex-direction: column;
 }
 </style>

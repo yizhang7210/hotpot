@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
 public class ControllerConfiguration {
 
     @Bean
-    public <T> ServiceController<T> serviceController(
+    public <U, V> ServiceController<U, V> serviceController(
         ServiceUseCase serviceUseCase,
-        ServiceTransformer<T> serviceTransformer
+        ServiceTransformer<U, V> serviceTransformer
     ) {
         LoggingUtils.logBeanName(log, ServiceController.class);
         return new ServiceController<>(serviceUseCase, serviceTransformer);

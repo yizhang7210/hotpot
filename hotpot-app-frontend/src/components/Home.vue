@@ -28,8 +28,4 @@
         margin-bottom: $small-margin;
     }
 
-    .service-list {
-        display: flex;
-        flex: 1;
-    }
 </style>

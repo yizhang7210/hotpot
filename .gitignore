@@ -32,3 +32,4 @@ build
 
 # And of course
 node_modules/
+dist/

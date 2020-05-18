@@ -31,10 +31,11 @@ public class UseCaseConfiguration {
     @Bean
     @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
     public ServiceObjectiveUseCase serviceObjectiveUseCase(
-        ServiceObjectiveProvider serviceObjectiveProvider
+        ServiceObjectiveProvider serviceObjectiveProvider,
+        ServiceUseCase serviceUseCase
     ) {
         LoggingUtils.logBeanName(log, ServiceObjectiveUseCase.class);
-        return new ServiceObjectiveUseCase(serviceObjectiveProvider);
+        return new ServiceObjectiveUseCase(serviceObjectiveProvider, serviceUseCase);
     }
 
 

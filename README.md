@@ -10,24 +10,25 @@ respective systems.
 
 These functionalities are then served via a default set of web APIs.
 
-An example Hotpot app is at the `hotpot-app` folder.
+An example Hotpot app can be found at the [hotpot-app](./hotpot-app) folder,
+and its frontend at [hotpot-front-end](./hotpot-app-frontend).
 
 
 ## Getting started
 1. Start with a spring boot application
 1. Import the hotpot-starter dependency in your maven/gradle
 1. Add the following configuration to your `application.yaml` or equivalent
-    ```$yaml
+    ```yaml
     hotpot:
       web-api:
         enabled: <enabled>    # default: true. Web API endpoints will be exposed.
-        base-url: <base-url>  # default: "". Web API endpoints will be exposed at the subpath of <base-url>
+        base-url: <base-url>  # default: "". Web API endpoints will be exposed under the <base-url> subpath
 
       slo:
         enabled: <enabled>    # default: false. Enable exposing service level objectives.
     ```
 1. Create beans that implement the following interfaces:
-    ```
+    ```yaml
     - ServiceIdentityProvider: to provide all the service identifiers
     - ServiceMetaDataProvider (can be multiple): to provide metadata given a service identifier
     - ServiceTransformer (optional): to transform a service object to a data transfer object (DTO) for the API response

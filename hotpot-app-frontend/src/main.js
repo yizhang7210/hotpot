@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
+import {BNavbar, BNavbarBrand, BFormInput, BPagination, BTable} from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 
 import App from './App.vue'
@@ -10,7 +10,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(VueRouter);
-Vue.use(BootstrapVue);
+Vue.component('b-navbar', BNavbar);
+Vue.component('b-navbar-brand', BNavbarBrand);
+Vue.component('b-form-input', BFormInput);
+Vue.component('b-pagination', BPagination);
+Vue.component('b-table', BTable);
 
 Vue.config.productionTip = false;
 

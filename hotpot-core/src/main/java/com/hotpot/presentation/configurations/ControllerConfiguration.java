@@ -1,6 +1,5 @@
 package com.hotpot.presentation.configurations;
 
-import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
@@ -8,7 +7,6 @@ import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.exceptions.UserError;
 import com.hotpot.presentation.api.ServiceObjectiveController;
 import com.hotpot.presentation.api.ServiceController;
-import com.hotpot.presentation.api.ServiceObjectiveResultController;
 import com.hotpot.utils.LoggingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -44,16 +42,6 @@ public class ControllerConfiguration {
     ) {
         LoggingUtils.logBeanName(log, ServiceObjectiveController.class);
         return new ServiceObjectiveController<>(serviceObjectiveUseCase, serviceObjectiveTransformer);
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
-    public <T> ServiceObjectiveResultController<T> serviceObjectiveResultController(
-        ServiceObjectiveUseCase serviceObjectiveUseCase,
-        ServiceObjectiveResultTransformer<T> serviceObjectiveTransformer
-    ) {
-        LoggingUtils.logBeanName(log, ServiceObjectiveResultController.class);
-        return new ServiceObjectiveResultController<>(serviceObjectiveUseCase, serviceObjectiveTransformer);
     }
 
     @ControllerAdvice

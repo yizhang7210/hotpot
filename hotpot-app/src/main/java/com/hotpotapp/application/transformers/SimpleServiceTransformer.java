@@ -5,11 +5,23 @@ import com.hotpot.domain.Channel;
 import com.hotpot.domain.Service;
 import com.hotpot.domain.Tier;
 import com.hotpot.domain.Version;
+import com.hotpot.domain.providers.ServiceObjectiveProvider;
+import com.hotpotapp.application.dtos.ServiceWithResults;
 import com.hotpotapp.application.dtos.SimpleServiceDto;
+import com.hotpotapp.application.dtos.SimpleServiceObjectiveResultDto;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Component
-public class SimpleServiceTransformer implements ServiceTransformer<SimpleServiceDto, Service> {
+@AllArgsConstructor
+public class SimpleServiceTransformer implements ServiceTransformer<SimpleServiceDto, ServiceWithResults> {
+
+    ServiceObjectiveProvider serviceObjectiveProvider;
+    SimpleServiceObjectiveResultTransformer resultTransformer;
 
     @Override
     public SimpleServiceDto toDto(Service service) {
@@ -23,7 +35,14 @@ public class SimpleServiceTransformer implements ServiceTransformer<SimpleServic
     }
 
     @Override
-    public Service toDetailedDto(Service service) {
-        return service;
+    public ServiceWithResults toDetailedDto(Service service) {
+
+        Map<String, SimpleServiceObjectiveResultDto> results = serviceObjectiveProvider.getObjectives()
+            .stream()
+            .map(o -> o.getResult(service))
+            .flatMap(Optional::stream)
+            .collect(Collectors.toMap(sor -> sor.getObjectiveId().getValue(), resultTransformer::toDto));
+
+        return new ServiceWithResults(service, results);
     }
 }

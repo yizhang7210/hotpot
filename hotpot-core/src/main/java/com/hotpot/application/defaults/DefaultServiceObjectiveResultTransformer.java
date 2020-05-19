@@ -9,5 +9,4 @@ public class DefaultServiceObjectiveResultTransformer implements ServiceObjectiv
     public ServiceObjectiveResult toDto(ServiceObjectiveResult result) {
         return result;
     }
-
 }

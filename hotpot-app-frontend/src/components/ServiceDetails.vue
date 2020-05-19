@@ -107,22 +107,21 @@
     .service-details {
         align-self: center;
         width: $main-section-max-width;
+        margin: $small-margin;
     }
 
     .service-title {
         font-size: $section-title-font-size;
-        margin: $small-margin;
     }
 
     .service-subtitle {
         font-size: $subtitle-font-size;
-        margin: $small-margin;
     }
 
     .service-detail {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
-        padding: $small-padding;
+        padding: 0 $small-padding;
     }
 
     .service-details-list {

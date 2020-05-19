@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com/hotpot/presentation/configurations/HotpotConfiguration
+  com/hotpot/configurations/HotpotConfiguration

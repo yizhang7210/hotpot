@@ -1,4 +1,4 @@
-package com.hotpot.utils;
+package com.hotpot.domain;
 
 import com.hotpot.domain.exceptions.UserError;
 import lombok.Getter;

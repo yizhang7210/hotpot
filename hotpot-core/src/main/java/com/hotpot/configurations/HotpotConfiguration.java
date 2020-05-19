@@ -1,4 +1,4 @@
-package com.hotpot.presentation.configurations;
+package com.hotpot.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

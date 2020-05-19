@@ -1,12 +1,12 @@
-package com.hotpot.presentation.configurations;
+package com.hotpot.configurations;
 
+import com.hotpot.api.ServiceController;
+import com.hotpot.api.ServiceObjectiveController;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.exceptions.UserError;
-import com.hotpot.presentation.api.ServiceObjectiveController;
-import com.hotpot.presentation.api.ServiceController;
 import com.hotpot.utils.LoggingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -9,7 +9,7 @@ import com.hotpot.domain.Team;
 import com.hotpot.domain.TeamName;
 import com.hotpot.domain.Version;
 import com.hotpot.domain.providers.ServiceMetaDataProvider;
-import com.hotpot.utils.Precedence;
+import com.hotpot.domain.Precedence;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

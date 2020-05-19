@@ -2,7 +2,7 @@ package com.hotpot.domain.providers;
 
 import com.hotpot.domain.ServiceId;
 import com.hotpot.domain.ServiceMetaData;
-import com.hotpot.utils.Precedence;
+import com.hotpot.domain.Precedence;
 
 import java.util.Collection;
 import java.util.Map;

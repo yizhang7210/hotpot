@@ -1,4 +1,4 @@
-package com.hotpot.presentation.api;
+package com.hotpot.api;
 
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;

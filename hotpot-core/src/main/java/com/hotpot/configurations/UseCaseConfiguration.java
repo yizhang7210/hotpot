@@ -1,4 +1,4 @@
-package com.hotpot.presentation.configurations;
+package com.hotpot.configurations;
 
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;

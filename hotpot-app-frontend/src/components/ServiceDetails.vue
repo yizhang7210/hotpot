@@ -1,6 +1,7 @@
 <template>
     <div class="service-details">
         <p class="service-title">{{ this.$route.params.sid }}</p>
+        <p class="service-subtitle"> Basic Information </p>
         <div class="service-details-list">
             <dl class="service-detail" v-for="detail in this.details" :key="detail.key">
                 <dt>
@@ -9,6 +10,19 @@
                 <dd>
                     <span v-bind:class="{warning: !detail.value}">
                         {{ detail.value || 'Not Available'}}
+                    </span>
+                </dd>
+            </dl>
+        </div>
+        <p class="service-subtitle"> Service Objective Results</p>
+        <div class="service-details-list">
+            <dl class="service-detail" v-for="result in this.objectiveResults" :key="result.objectiveId">
+                <dt>
+                    {{result.objectiveId}}
+                </dt>
+                <dd>
+                    <span v-bind:class="{warning: !result.status}">
+                        {{ result.status || 'Not Available'}}
                     </span>
                 </dd>
             </dl>
@@ -24,6 +38,7 @@
     data() {
       return {
         details: null,
+        objectiveResults: null
       }
     },
     mounted() {
@@ -33,7 +48,8 @@
     methods: {
       populateService: async function () {
         const response = await http.get(`v1/services/${this.$route.params.sid}`);
-        const metaData = response.data.metaData;
+        const metaData = response.data.service.metaData;
+        this.objectiveResults = response.data.results;
 
         this.details = [
           {
@@ -98,8 +114,13 @@
         margin: $small-margin;
     }
 
+    .service-subtitle {
+        font-size: $subtitle-font-size;
+        margin: $small-margin;
+    }
+
     .service-detail {
-        width: 50%; /* to ensure 2 columns */
+        width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
         padding: $small-padding;
     }
@@ -107,7 +128,7 @@
     .service-details-list {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
         overflow: auto;
     }
 

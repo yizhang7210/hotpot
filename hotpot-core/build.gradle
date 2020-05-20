@@ -54,8 +54,6 @@ java {
     withJavadocJar()
 }
 
-version = generateVersion()
-
 jar {
     manifest {
         attributes(
@@ -80,13 +78,6 @@ dependencies {
     annotationProcessor lombok
     testCompileOnly lombok
     testAnnotationProcessor lombok
-}
-
-static generateVersion() {
-    def commitHash = 'git rev-parse --short HEAD'.execute().text.trim()
-    def branchName = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
-    def snapshotSuffix = branchName == 'master' ? '' : '-SNAPSHOT'
-    "0.${new Date().format('yyMMdd')}.${new Date().format('HHmmss')}-${commitHash}${snapshotSuffix}"
 }
 
 test {

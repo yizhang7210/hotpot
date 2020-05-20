@@ -13,9 +13,7 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    // TODO: Move to jcenter once this is sync'ed
-    maven { url "https://dl.bintray.com/yizhang7210/hotpot" }
+    jcenter()
 }
 
 dependencies {

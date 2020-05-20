@@ -71,6 +71,10 @@ dependencies {
     implementation "org.springframework:spring-web"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
 
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
     // Lombok
     compileOnly lombok
     annotationProcessor lombok
@@ -83,4 +87,8 @@ static generateVersion() {
     def branchName = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
     def snapshotSuffix = branchName == 'master' ? '' : '-SNAPSHOT'
     "0.${new Date().format('yyMMdd')}.${new Date().format('HHmmss')}-${commitHash}${snapshotSuffix}"
+}
+
+test {
+    useJUnitPlatform()
 }

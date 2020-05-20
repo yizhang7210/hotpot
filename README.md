@@ -33,7 +33,7 @@ and its frontend at [hotpot-front-end](./hotpot-app-frontend).
     - ServiceMetaDataProvider (can be multiple): to provide metadata given a service identifier
     - ServiceTransformer (optional): to transform a service object to a data transfer object (DTO) for the API response
     ```
-1. If `hotpot.slo.enabled` is true, then create bean that implement the following interfaces:
+1. If `hotpot.slo.enabled` is true, then create beans that implement the following interfaces:
     ```yaml
     - ServiceObjective (can be multiple): to define a service level objective
     - ServiceObjectiveProvider: to provide all the service level objectives

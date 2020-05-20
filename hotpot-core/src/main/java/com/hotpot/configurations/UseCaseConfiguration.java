@@ -8,6 +8,7 @@ import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpot.utils.LoggingUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,7 @@ public class UseCaseConfiguration {
 
     @Bean
     @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnBean(ServiceObjectiveProvider.class)
     public ServiceObjectiveUseCase serviceObjectiveUseCase(
         ServiceObjectiveProvider serviceObjectiveProvider,
         ServiceUseCase serviceUseCase

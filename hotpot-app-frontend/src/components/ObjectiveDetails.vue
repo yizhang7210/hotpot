@@ -1,32 +1,38 @@
 <template>
     <div class="objective-details">
         <p class="objective-title">{{ this.$route.params.oid }}</p>
-        <p class="objective-subtitle"> Basic Information </p>
-        <div class="objective-details-list">
-            <dl class="objective-detail" v-for="detail in this.details" :key="detail.key">
-                <dt>
-                    {{detail.display}}
-                </dt>
-                <dd>
-                    <span v-bind:class="{warning: !detail.value}">
-                        {{ detail.value || 'Not Available'}}
-                    </span>
-                </dd>
-            </dl>
-        </div>
-        <p class="objective-subtitle"> Service Objective Results</p>
-        <div class="objective-details-list">
-            <dl class="objective-detail" v-for="result in this.serviceResults" :key="result.serviceId">
-                <dt>
-                    {{result.serviceId}}
-                </dt>
-                <dd>
-                    <span v-bind:class="{warning: !result.status}">
-                        {{ result.status || 'Not Available'}}
-                    </span>
-                </dd>
-            </dl>
-        </div>
+
+        <b-tabs lazy>
+            <b-tab title="Basic Information" active>
+                <div class="objective-details-list">
+                    <dl class="objective-detail" v-for="detail in this.details" :key="detail.key">
+                        <dt>
+                            {{detail.display}}
+                        </dt>
+                        <dd>
+                            <span v-bind:class="{warning: !detail.value}">
+                                {{ detail.value || 'Not Available'}}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+            </b-tab>
+
+            <b-tab title="Service Objective Results" active>
+                <div class="objective-details-list">
+                    <dl class="objective-detail" v-for="result in this.serviceResults" :key="result.serviceId">
+                        <dt>
+                            {{result.serviceId}}
+                        </dt>
+                        <dd>
+                            <span v-bind:class="{warning: !result.status}">
+                                {{ result.status || 'Not Available'}}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+            </b-tab>
+        </b-tabs>
     </div>
 </template>
 
@@ -74,13 +80,10 @@
         font-size: $section-title-font-size;
     }
 
-    .objective-subtitle {
-        font-size: $subtitle-font-size;
-    }
-
     .objective-detail {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
+        padding: 0 $small-padding;
     }
 
     .objective-details-list {
@@ -88,7 +91,7 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         overflow: auto;
-        margin: 0 $small-margin;
+        margin-top: $small-margin;
     }
 
     .warning {

@@ -1,6 +1,7 @@
 package com.hotpot.application.usecases;
 
 import com.hotpot.domain.ObjectiveId;
+import com.hotpot.domain.ServiceId;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveResult;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -34,7 +36,7 @@ public class ServiceObjectiveUseCase {
         );
     }
 
-    public <T> List<T> getObjectiveResultsById(ObjectiveId objectiveId, Function<ServiceObjectiveResult, T> transformer) {
+    public <T> Map<String, T> getObjectiveResultsById(ObjectiveId objectiveId, Function<ServiceObjectiveResult, T> transformer) {
 
         ServiceObjective objective = serviceObjectiveProvider
             .getObjectiveById(objectiveId).orElseThrow(() -> new ObjectiveNotFoundError(objectiveId));
@@ -43,8 +45,7 @@ public class ServiceObjectiveUseCase {
             .stream()
             .map(objective::getResult)
             .flatMap(Optional::stream)
-            .map(transformer)
-            .collect(Collectors.toList());
+            .collect(Collectors.toMap(s -> s.getServiceId().getValue(), transformer));
 
     }
 }

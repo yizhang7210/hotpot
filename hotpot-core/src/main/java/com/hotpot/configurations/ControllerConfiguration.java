@@ -2,6 +2,7 @@ package com.hotpot.configurations;
 
 import com.hotpot.api.ServiceController;
 import com.hotpot.api.ServiceObjectiveController;
+import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
@@ -36,12 +37,17 @@ public class ControllerConfiguration {
 
     @Bean
     @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
-    public <U, V> ServiceObjectiveController<U, V> serviceObjectiveController(
+    public <U, V, W> ServiceObjectiveController<U, V, W> serviceObjectiveController(
         ServiceObjectiveUseCase serviceObjectiveUseCase,
-        ServiceObjectiveTransformer<U, V> serviceObjectiveTransformer
+        ServiceObjectiveTransformer<U, V> serviceObjectiveTransformer,
+        ServiceObjectiveResultTransformer<W> serviceObjectiveResultTransformer
     ) {
         LoggingUtils.logBeanName(log, ServiceObjectiveController.class);
-        return new ServiceObjectiveController<>(serviceObjectiveUseCase, serviceObjectiveTransformer);
+        return new ServiceObjectiveController<>(
+            serviceObjectiveUseCase,
+            serviceObjectiveTransformer,
+            serviceObjectiveResultTransformer
+        );
     }
 
     @ControllerAdvice

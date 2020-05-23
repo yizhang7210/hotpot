@@ -8,5 +8,6 @@ import java.util.function.Predicate;
 @Value
 public class Criterion<T> {
     private ServiceMetric metric;
-    private Predicate<ServiceMetricValue<T>> check;
+    private Predicate<ServiceMetricValue<T>> condition;
+
 }

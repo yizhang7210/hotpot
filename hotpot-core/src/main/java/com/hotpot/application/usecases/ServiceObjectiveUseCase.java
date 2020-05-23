@@ -8,14 +8,12 @@ import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveResult;
 import com.hotpot.domain.providers.ServiceDataProvider;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
-import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.ObjectiveNotFoundError;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,10 +24,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ServiceObjectiveUseCase {
 
-    ServiceObjectiveProvider serviceObjectiveProvider;
-    ServiceIdentityProvider serviceIdentityProvider;
-    ServiceMetricProvider serviceMetricProvider;
-    List<ServiceDataProvider> serviceDataProviders;
+    private final ServiceIdentityProvider serviceIdentityProvider;
+    private final ServiceObjectiveProvider serviceObjectiveProvider;
+    private final List<ServiceDataProvider> serviceDataProviders;
 
     public <T> List<T> getServiceObjectives(Function<ServiceObjective, T> transformer) {
         return serviceObjectiveProvider.getObjectives()
@@ -50,28 +47,31 @@ public class ServiceObjectiveUseCase {
         ServiceObjective objective = serviceObjectiveProvider
             .getObjectiveById(objectiveId).orElseThrow(() -> new ObjectiveNotFoundError(objectiveId));
 
-        Map<Criterion<?>, ServiceDataProvider> metricToProvider = objective.getCriteria()
-            .stream()
-            .collect(Collectors.toMap(
-                Function.identity(),
-                criterion -> getDataProvider(criterion.getMetric()).orElseThrow(RuntimeException::new)
-            ));
-
         Collection<ServiceId> serviceIds = serviceIdentityProvider.getServiceIds();
 
-        Map<String, T> result = new HashMap<>();
-        for (ServiceId serviceId : serviceIds) {
-            boolean success = true;
-            for (Criterion<?> criterion : metricToProvider.keySet()) {
-                success = success && criterion.getCheck().test(metricToProvider.get(criterion).getForService(criterion.getMetric(), serviceId));
-            }
-            result.put(serviceId.getValue(), transformer.apply(new ServiceObjectiveResult(
-                serviceId, objectiveId, ServiceObjectiveResult.Status.fromBoolean(success)
-            )));
-        }
+        return serviceIds
+            .stream()
+            .collect(Collectors.toMap(
+                ServiceId::getValue,
+                sid -> transformer.apply(getResultByServiceAndObjective(sid, objective))
+            ));
+    }
 
-        return result;
+    private ServiceObjectiveResult getResultByServiceAndObjective(ServiceId serviceId, ServiceObjective objective) {
+        boolean success = objective.getCriteria()
+            .stream()
+            .allMatch(criterion -> checkForService(criterion, serviceId));
 
+        return new ServiceObjectiveResult(serviceId, objective.getId(), ServiceObjectiveResult.Status.fromBoolean(success));
+    }
+
+    private boolean checkForService(Criterion<?> criterion, ServiceId serviceId) {
+        ServiceMetric metric = criterion.getMetric();
+
+        return criterion.getCondition().test(
+            getDataProvider(metric).orElseThrow(() -> new ServiceDataProvider.DataProviderNotFoundError(metric))
+                .getForService(metric, serviceId)
+        );
     }
 
     private Optional<ServiceDataProvider> getDataProvider(ServiceMetric metric) {
@@ -79,4 +79,5 @@ public class ServiceObjectiveUseCase {
             .filter(sdp -> sdp.doesProvideFor(metric))
             .findFirst();
     }
+
 }

@@ -27,7 +27,7 @@ public class DemoServiceMetricProvider implements ServiceMetricProvider {
             Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId(),
             "releases per day",
             Duration.ofDays(28),
-            Long.class
+            Double.class
         ),
         new ServiceMetric<>(
             Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId(),
@@ -43,10 +43,10 @@ public class DemoServiceMetricProvider implements ServiceMetricProvider {
     }
 
     @Override
-    public <T> ServiceMetric<T> getByIdAndSpan(MetricId metricId, Duration span) {
+    public <T> ServiceMetric<T> getById(MetricId metricId) {
         return (ServiceMetric<T>) metrics.stream()
-            .filter(m -> m.getId().equals(metricId) && m.getTimeSpan().equals(span))
+            .filter(m -> m.getId().equals(metricId))
             .findFirst()
-            .orElseThrow(() -> new ServiceMetricNotFoundError(metricId, span));
+            .orElseThrow(() -> new ServiceMetricNotFoundError(metricId));
     }
 }

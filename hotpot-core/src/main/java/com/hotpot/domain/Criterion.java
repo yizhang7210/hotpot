@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 @Value
 public class Criterion<T> {
-    private ServiceMetric<T> metric;
+    private MetricId metricId;
     private Predicate<ServiceMetricValue<T>> condition;
 
 }

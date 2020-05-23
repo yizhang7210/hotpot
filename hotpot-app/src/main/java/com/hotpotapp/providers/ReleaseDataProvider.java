@@ -22,8 +22,8 @@ public class ReleaseDataProvider implements ServiceDataProvider {
         Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId()
     );
 
-    public Long getAverageReleases(ServiceId serviceId, Instant from, Instant to) {
-        return Math.round(Math.random() * 100);
+    public Double getAverageReleases(ServiceId serviceId, Instant from, Instant to) {
+        return Math.random() * 100;
     }
 
     public Double getRollbackPercentage(ServiceId serviceId, Instant from, Instant to) {

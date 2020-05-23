@@ -1,5 +1,6 @@
 package com.hotpot.domain;
 
+import com.hotpot.domain.providers.ServiceMetricProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ServiceObjectiveEvaluator {
 
     private final ServiceDataSourcePicker serviceDataSourcePicker;
+    private final ServiceMetricProvider serviceMetricProvider;
 
     public ServiceObjectiveResult runOnService(ServiceObjective objective, ServiceId serviceId) {
         boolean success = objective.getCriteria()
@@ -18,10 +20,10 @@ public class ServiceObjectiveEvaluator {
     }
 
     private <T> boolean checkForService(Criterion<T> criterion, ServiceId serviceId) {
-        ServiceMetric<T> metric = criterion.getMetric();
+        ServiceMetric<T> metric = serviceMetricProvider.getById(criterion.getMetricId());
 
         return criterion.getCondition().test(
-            serviceDataSourcePicker.getDataProvider(metric.getId())
+            serviceDataSourcePicker.getDataProvider(criterion.getMetricId())
                 .getForService(metric, serviceId)
         );
     }

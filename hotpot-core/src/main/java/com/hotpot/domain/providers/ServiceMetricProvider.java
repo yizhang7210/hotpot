@@ -4,19 +4,17 @@ import com.hotpot.domain.MetricId;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.exceptions.UserError;
 
-import java.time.Duration;
 import java.util.Collection;
 
 public interface ServiceMetricProvider {
 
     Collection<ServiceMetric<?>> getAllMetrics();
 
-    <T> ServiceMetric<T> getByIdAndSpan(MetricId metricId, Duration span);
+    <T> ServiceMetric<T> getById(MetricId metricId);
 
     class ServiceMetricNotFoundError extends UserError {
-        public ServiceMetricNotFoundError(MetricId metricId, Duration span) {
-            super(String.format("Service metrics with id %s and duration %s is not found.",
-                metricId.getValue(), span.toString()));
+        public ServiceMetricNotFoundError(MetricId metricId) {
+            super(String.format("Service metrics with id %s is not found.", metricId.getValue()));
         }
     }
 

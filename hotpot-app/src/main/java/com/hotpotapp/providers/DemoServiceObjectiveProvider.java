@@ -3,8 +3,10 @@ package com.hotpotapp.providers;
 
 import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ObjectiveId;
+import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceMetricValue;
 import com.hotpot.domain.ServiceObjective;
+import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpotapp.domain.Metrics;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class DemoServiceObjectiveProvider implements ServiceObjectiveProvider {
 
+    private final ServiceMetricProvider serviceMetricProvider;
+
     @Override
     public Collection<ServiceObjective> getObjectives() {
         return List.of(
@@ -25,8 +29,8 @@ public class DemoServiceObjectiveProvider implements ServiceObjectiveProvider {
                 ObjectiveId.of("documentation"),
                 "Every service should have documentation",
                 List.of(
-                    new Criterion<Boolean>(
-                        Metrics.DOCUMENTATION_PRESENT.getMetricId(),
+                    new Criterion<>(
+                        (ServiceMetric<Boolean>) serviceMetricProvider.getById(Metrics.DOCUMENTATION_PRESENT.getMetricId()),
                         ServiceMetricValue::getValue)
                 )
             ),
@@ -34,11 +38,11 @@ public class DemoServiceObjectiveProvider implements ServiceObjectiveProvider {
                 ObjectiveId.of("release-frequency"),
                 "Every service should released frequently",
                 List.of(
-                    new Criterion<Double>(
-                        Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId(),
+                    new Criterion<>(
+                        (ServiceMetric<Double>) serviceMetricProvider.getById(Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId()),
                         value -> value.getValue() > 1),
-                    new Criterion<Double>(
-                        Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId(),
+                    new Criterion<>(
+                        (ServiceMetric<Double>) serviceMetricProvider.getById(Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId()),
                         value -> value.getValue() < 0.3)
                 )
             )

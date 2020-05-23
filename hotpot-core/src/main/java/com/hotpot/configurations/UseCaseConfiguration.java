@@ -3,6 +3,7 @@ package com.hotpot.configurations;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.ServiceDataSourcePicker;
+import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceMetaDataProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
@@ -35,10 +36,10 @@ public class UseCaseConfiguration {
     @ConditionalOnBean(ServiceObjectiveProvider.class)
     public ServiceObjectiveUseCase serviceObjectiveUseCase(
         ServiceObjectiveProvider serviceObjectiveProvider,
-        ServiceDataSourcePicker serviceDataSourcePicker
+        ServiceObjectiveEvaluator serviceObjectiveEvaluator
     ) {
         LoggingUtils.logBeanName(log, ServiceObjectiveUseCase.class);
-        return new ServiceObjectiveUseCase(serviceIdentityProvider, serviceObjectiveProvider, serviceDataSourcePicker);
+        return new ServiceObjectiveUseCase(serviceIdentityProvider, serviceObjectiveProvider, serviceObjectiveEvaluator);
     }
 
 }

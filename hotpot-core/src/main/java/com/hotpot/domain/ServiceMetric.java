@@ -9,5 +9,5 @@ import java.time.Duration;
 public class ServiceMetric {
     private MetricId metricId;
     private String description;
-    private Duration duration; // Need a better name for this
+    private Duration timeSpan;
 }

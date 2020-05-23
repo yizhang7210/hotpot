@@ -1,11 +1,9 @@
 package com.hotpot.application.usecases;
 
-import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ObjectiveId;
-import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceId;
-import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceObjective;
+import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.ServiceObjectiveResult;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
@@ -25,7 +23,7 @@ public class ServiceObjectiveUseCase {
 
     private final ServiceIdentityProvider serviceIdentityProvider;
     private final ServiceObjectiveProvider serviceObjectiveProvider;
-    private final ServiceDataSourcePicker serviceDataSourcePicker;
+    private final ServiceObjectiveEvaluator serviceObjectiveEvaluator;
 
     public <T> List<T> getServiceObjectives(Function<ServiceObjective, T> transformer) {
         return serviceObjectiveProvider.getObjectives()
@@ -52,24 +50,8 @@ public class ServiceObjectiveUseCase {
             .stream()
             .collect(Collectors.toMap(
                 ServiceId::getValue,
-                sid -> transformer.apply(getResultByServiceAndObjective(sid, objective))
+                sid -> transformer.apply(serviceObjectiveEvaluator.runOnService(objective, sid))
             ));
     }
 
-    private ServiceObjectiveResult getResultByServiceAndObjective(ServiceId serviceId, ServiceObjective objective) {
-        boolean success = objective.getCriteria()
-            .stream()
-            .allMatch(criterion -> checkForService(criterion, serviceId));
-
-        return new ServiceObjectiveResult(serviceId, objective.getId(), ServiceObjectiveResult.Status.fromBoolean(success));
-    }
-
-    private boolean checkForService(Criterion<?> criterion, ServiceId serviceId) {
-        ServiceMetric metric = criterion.getMetric();
-
-        return criterion.getCondition().test(
-            serviceDataSourcePicker.getDataProvider(metric)
-                .getForService(metric, serviceId)
-        );
-    }
 }

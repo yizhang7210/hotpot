@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 public enum Metrics {
-    NON_5XX_REQUEST_PERCENTAGE(MetricId.of("non-500-request-percentage")),
-    KAFKA_MESSAGE_QUEUE_SIZE(MetricId.of("kafka-message-queue-size")),
-    DOCUMENTATION_PRESENT(MetricId.of("documentation-present"));
+    DOCUMENTATION_PRESENT(MetricId.of("documentation-present")),
+    AVERAGE_RELEASES_PER_DAY(MetricId.of("average-releases-per-day")),
+    OVERALL_ROLLBACK_PERCENTAGE(MetricId.of("rollbacks-percentage"));
 
     private final MetricId metricId;
 

@@ -15,7 +15,12 @@ public class ServiceObjectiveResult {
 
     public enum Status {
         MET,
-        NOT_MET
+        NOT_MET;
+
+        public static Status fromBoolean(boolean success) {
+            return success ? MET : NOT_MET;
+        }
+
     }
 
     public Optional<Status> getStatus() {

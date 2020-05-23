@@ -10,7 +10,7 @@ public interface ServiceMetricProvider {
 
     Collection<ServiceMetric<?>> getAllMetrics();
 
-    <T> ServiceMetric<T> getById(MetricId metricId);
+    ServiceMetric<?> getById(MetricId metricId);
 
     class ServiceMetricNotFoundError extends UserError {
         public ServiceMetricNotFoundError(MetricId metricId) {

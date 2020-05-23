@@ -43,8 +43,8 @@ public class DemoServiceMetricProvider implements ServiceMetricProvider {
     }
 
     @Override
-    public <T> ServiceMetric<T> getById(MetricId metricId) {
-        return (ServiceMetric<T>) metrics.stream()
+    public ServiceMetric<?> getById(MetricId metricId) {
+        return metrics.stream()
             .filter(m -> m.getId().equals(metricId))
             .findFirst()
             .orElseThrow(() -> new ServiceMetricNotFoundError(metricId));

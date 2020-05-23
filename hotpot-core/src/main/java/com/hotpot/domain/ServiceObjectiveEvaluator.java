@@ -20,7 +20,7 @@ public class ServiceObjectiveEvaluator {
     }
 
     private <T> boolean checkForService(Criterion<T> criterion, ServiceId serviceId) {
-        ServiceMetric<T> metric = serviceMetricProvider.getById(criterion.getMetricId());
+        ServiceMetric<T> metric = (ServiceMetric<T>) serviceMetricProvider.getById(criterion.getMetricId());
 
         return criterion.getCondition().test(
             serviceDataSourcePicker.getDataProvider(criterion.getMetricId())

@@ -17,4 +17,10 @@ public interface ServiceDataProvider {
         }
     }
 
+    class MultipleDataProviderError extends UserError {
+        public MultipleDataProviderError(ServiceMetric metric) {
+            super(String.format("There are multiple data providers for %s.", metric.toString()));
+        }
+    }
+
 }

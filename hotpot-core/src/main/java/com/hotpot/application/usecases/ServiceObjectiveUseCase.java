@@ -2,11 +2,11 @@ package com.hotpot.application.usecases;
 
 import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ObjectiveId;
+import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceId;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveResult;
-import com.hotpot.domain.providers.ServiceDataProvider;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.ObjectiveNotFoundError;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class ServiceObjectiveUseCase {
 
     private final ServiceIdentityProvider serviceIdentityProvider;
     private final ServiceObjectiveProvider serviceObjectiveProvider;
-    private final List<ServiceDataProvider> serviceDataProviders;
+    private final ServiceDataSourcePicker serviceDataSourcePicker;
 
     public <T> List<T> getServiceObjectives(Function<ServiceObjective, T> transformer) {
         return serviceObjectiveProvider.getObjectives()
@@ -69,15 +68,8 @@ public class ServiceObjectiveUseCase {
         ServiceMetric metric = criterion.getMetric();
 
         return criterion.getCondition().test(
-            getDataProvider(metric).orElseThrow(() -> new ServiceDataProvider.DataProviderNotFoundError(metric))
+            serviceDataSourcePicker.getDataProvider(metric)
                 .getForService(metric, serviceId)
         );
     }
-
-    private Optional<ServiceDataProvider> getDataProvider(ServiceMetric metric) {
-        return serviceDataProviders.stream()
-            .filter(sdp -> sdp.doesProvideFor(metric))
-            .findFirst();
-    }
-
 }

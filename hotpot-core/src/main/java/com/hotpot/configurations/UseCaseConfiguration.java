@@ -2,7 +2,6 @@ package com.hotpot.configurations;
 
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
-import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceMetaDataProvider;

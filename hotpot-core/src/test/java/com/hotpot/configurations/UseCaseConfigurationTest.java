@@ -20,6 +20,7 @@ public class UseCaseConfigurationTest {
             .withConfiguration(AutoConfigurations.of(
                 TestRequiredBeanConfiguration.class,
                 DefaultBeanConfiguration.class,
+                UtilityBeanConfiguration.class,
                 UseCaseConfiguration.class
             ));
     }

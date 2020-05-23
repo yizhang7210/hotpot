@@ -4,7 +4,6 @@ import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.domain.ObjectiveId;
-import com.hotpot.domain.ServiceId;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Import;
 @Import({
     ControllerConfiguration.class,
     UseCaseConfiguration.class,
-    DefaultBeanConfiguration.class
+    DefaultBeanConfiguration.class,
+    UtilityBeanConfiguration.class
 })
 public class HotpotConfiguration {
 

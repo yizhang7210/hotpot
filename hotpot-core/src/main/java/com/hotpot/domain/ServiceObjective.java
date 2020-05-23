@@ -1,11 +1,13 @@
 package com.hotpot.domain;
 
 
-import java.util.Optional;
+import lombok.Value;
 
-public interface ServiceObjective {
-    ObjectiveId getId();
-    Boolean isApplicable(Service service);
-    String getDescription();
-    Optional<ServiceObjectiveResult> getResult(Service service);
+import java.util.List;
+
+@Value(staticConstructor = "of")
+public class ServiceObjective {
+    private final ObjectiveId id;
+    private final String description;
+    private final List<Criterion<?>> criteria;
 }

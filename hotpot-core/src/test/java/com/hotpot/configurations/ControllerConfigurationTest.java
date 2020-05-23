@@ -21,6 +21,7 @@ public class ControllerConfigurationTest {
                 TestRequiredBeanConfiguration.class,
                 DefaultBeanConfiguration.class,
                 UseCaseConfiguration.class,
+                UtilityBeanConfiguration.class,
                 ControllerConfiguration.class
             ));
     }

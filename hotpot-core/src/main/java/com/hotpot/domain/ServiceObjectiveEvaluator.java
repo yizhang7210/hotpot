@@ -17,11 +17,11 @@ public class ServiceObjectiveEvaluator {
         return new ServiceObjectiveResult(serviceId, objective.getId(), ServiceObjectiveResult.Status.fromBoolean(success));
     }
 
-    private boolean checkForService(Criterion<?> criterion, ServiceId serviceId) {
-        ServiceMetric metric = criterion.getMetric();
+    private <T> boolean checkForService(Criterion<T> criterion, ServiceId serviceId) {
+        ServiceMetric<T> metric = criterion.getMetric();
 
         return criterion.getCondition().test(
-            serviceDataSourcePicker.getDataProvider(metric)
+            serviceDataSourcePicker.getDataProvider(metric.getId())
                 .getForService(metric, serviceId)
         );
     }

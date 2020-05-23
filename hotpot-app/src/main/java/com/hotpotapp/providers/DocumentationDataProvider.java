@@ -22,14 +22,17 @@ public class DocumentationDataProvider implements ServiceDataProvider {
     );
 
     @Override
-    public boolean doesProvideFor(ServiceMetric metric) {
-        return PROVIDED_METRICS.contains(metric.getMetricId());
+    public boolean doesProvideFor(MetricId metricId) {
+        return PROVIDED_METRICS.contains(metricId);
     }
 
     @Override
-    //TODO: Figure out this generic type thing
-    public ServiceMetricValue<Boolean> getForService(ServiceMetric metric, ServiceId serviceId) {
+    public <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId) {
         boolean success = serviceId.getValue().length() < 10;
-        return new ServiceMetricValue<>(metric, Instant.now(), success);
+        return new ServiceMetricValue<>(
+            metric,
+            Instant.now(),
+            metric.getMetricType().cast(success)
+        );
     }
 }

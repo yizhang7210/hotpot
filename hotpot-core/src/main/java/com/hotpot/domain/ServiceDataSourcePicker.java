@@ -13,25 +13,25 @@ import java.util.stream.Collectors;
 public class ServiceDataSourcePicker {
 
     private final List<ServiceDataProvider> serviceDataProviders;
-    private final Map<ServiceMetric, ServiceDataProvider> cachedMap = new HashMap<>();
+    private final Map<MetricId, ServiceDataProvider> cachedMap = new HashMap<>();
 
-    public ServiceDataProvider getDataProvider(ServiceMetric metric) {
+    public ServiceDataProvider getDataProvider(MetricId metricId) {
 
-        if (cachedMap.containsKey(metric)) {
-            return cachedMap.get(metric);
+        if (cachedMap.containsKey(metricId)) {
+            return cachedMap.get(metricId);
         }
 
         List<ServiceDataProvider> providers = serviceDataProviders.stream()
-            .filter(sdp -> sdp.doesProvideFor(metric))
+            .filter(sdp -> sdp.doesProvideFor(metricId))
             .collect(Collectors.toList());
 
         if (providers.size() < 1) {
-            throw new ServiceDataProvider.DataProviderNotFoundError(metric);
+            throw new ServiceDataProvider.DataProviderNotFoundError(metricId);
         } else if (providers.size() > 1) {
-            throw new ServiceDataProvider.MultipleDataProviderError(metric);
+            throw new ServiceDataProvider.MultipleDataProviderError(metricId);
         } else {
             ServiceDataProvider provider = providers.get(0);
-            cachedMap.put(metric, provider);
+            cachedMap.put(metricId, provider);
             return provider;
         }
 

@@ -16,33 +16,36 @@ import java.util.List;
 @AllArgsConstructor
 public class DemoServiceMetricProvider implements ServiceMetricProvider {
 
-    private final List<ServiceMetric> metrics = List.of(
-        new ServiceMetric(
+    private final List<ServiceMetric<?>> metrics = List.of(
+        new ServiceMetric<>(
             Metrics.DOCUMENTATION_PRESENT.getMetricId(),
             "documentation",
-            Duration.ZERO
+            Duration.ZERO,
+            Boolean.class
         ),
-        new ServiceMetric(
+        new ServiceMetric<>(
             Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId(),
             "releases per day",
-            Duration.ofDays(28)
+            Duration.ofDays(28),
+            Long.class
         ),
-        new ServiceMetric(
+        new ServiceMetric<>(
             Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId(),
             "rollbacks percentage",
-            Duration.ofDays(28)
+            Duration.ofDays(28),
+            Double.class
         )
     );
 
     @Override
-    public Collection<ServiceMetric> getAllMetrics() {
+    public Collection<ServiceMetric<?>> getAllMetrics() {
         return metrics;
     }
 
     @Override
-    public ServiceMetric getByIdAndSpan(MetricId metricId, Duration span) {
-        return metrics.stream()
-            .filter(m -> m.getMetricId().equals(metricId) && m.getTimeSpan().equals(span))
+    public <T> ServiceMetric<T> getByIdAndSpan(MetricId metricId, Duration span) {
+        return (ServiceMetric<T>) metrics.stream()
+            .filter(m -> m.getId().equals(metricId) && m.getTimeSpan().equals(span))
             .findFirst()
             .orElseThrow(() -> new ServiceMetricNotFoundError(metricId, span));
     }

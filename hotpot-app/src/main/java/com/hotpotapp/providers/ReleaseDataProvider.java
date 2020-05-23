@@ -22,34 +22,37 @@ public class ReleaseDataProvider implements ServiceDataProvider {
         Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId()
     );
 
-    public ServiceMetricValue<Long> getAverageReleases(ServiceId serviceId, ServiceMetric metric, Instant from, Instant to) {
-        return new ServiceMetricValue<>(
-            metric,
-            to,
-            Math.round(Math.random() * 100)
-        );
+    public Long getAverageReleases(ServiceId serviceId, Instant from, Instant to) {
+        return Math.round(Math.random() * 100);
     }
 
-    public ServiceMetricValue<Double> getRollbackPercentage(ServiceId serviceId, ServiceMetric metric, Instant from, Instant to) {
-        return new ServiceMetricValue<>(
-            metric,
-            to,
-            Math.random()
-        );
+    public Double getRollbackPercentage(ServiceId serviceId, Instant from, Instant to) {
+        return Math.random();
     }
 
     @Override
-    public boolean doesProvideFor(ServiceMetric metric) {
-        return PROVIDED_METRICS.contains(metric.getMetricId());
+    public boolean doesProvideFor(MetricId metricId) {
+        return PROVIDED_METRICS.contains(metricId);
     }
 
     @Override
-    //TODO: Figure out this generic type thing
-    public ServiceMetricValue<? extends Number> getForService(ServiceMetric metric, ServiceId serviceId) {
-        if (metric.getMetricId().equals(Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId())) {
-            return getAverageReleases(serviceId, metric, Instant.now().minus(metric.getTimeSpan()), Instant.now());
-        } else if (metric.getMetricId().equals(Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId())) {
-            return getRollbackPercentage(serviceId, metric, Instant.now().minus(metric.getTimeSpan()), Instant.now());
+    public <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId) {
+        Instant from = Instant.now().minus(metric.getTimeSpan());
+        Instant to = Instant.now();
+
+        if (metric.getId().equals(Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId())) {
+            return new ServiceMetricValue<>(
+                metric,
+                Instant.now(),
+                metric.getMetricType().cast(getAverageReleases(serviceId, from, to))
+            );
+
+        } else if (metric.getId().equals(Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId())) {
+            return new ServiceMetricValue<>(
+                metric,
+                Instant.now(),
+                metric.getMetricType().cast(getRollbackPercentage(serviceId, from, to))
+            );
         } else {
             return null;
         }

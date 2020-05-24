@@ -1,6 +1,7 @@
 package com.hotpot.lib.yaml;
 
 import com.hotpot.domain.providers.ServiceMetricProvider;
+import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpot.utils.LoggingUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +25,17 @@ public class AutoConfiguration {
         LoggingUtils.logBeanName(log, YamlServiceMetricProvider.class);
         return new YamlServiceMetricProvider(metricsDefinitionLocation, defaultResourceLoader);
     }
+
+    @Bean
+    @ConditionalOnProperty(value = "hotpot.metrics.provider-type", havingValue = "yaml")
+    public ServiceObjectiveProvider serviceObjectiveProvider(
+        @Value("${hotpot.metrics.objectives-definition}") String objectiveDefinitionLocation,
+        DefaultResourceLoader defaultResourceLoader,
+        ServiceMetricProvider serviceMetricProvider
+    ) {
+        LoggingUtils.logBeanName(log, YamlServiceObjectiveProvider.class);
+        return new YamlServiceObjectiveProvider(objectiveDefinitionLocation, defaultResourceLoader, serviceMetricProvider);
+    }
+
 
 }

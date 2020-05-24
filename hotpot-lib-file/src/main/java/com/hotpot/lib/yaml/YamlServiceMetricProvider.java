@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,11 +52,10 @@ public class YamlServiceMetricProvider implements ServiceMetricProvider {
     }
 
     @Override
-    public ServiceMetric<?> getById(MetricId metricId) {
+    public Optional<ServiceMetric<?>> getById(MetricId metricId) {
         return getAllMetrics().stream()
             .filter(m -> m.getId().equals(metricId))
-            .findFirst()
-            .orElseThrow(() -> new ServiceMetricNotFoundErrorHotpot(metricId));
+            .findFirst();
     }
 
 }

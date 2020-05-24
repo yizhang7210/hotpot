@@ -18,6 +18,12 @@ public interface ServiceObjectiveProvider {
         }
     }
 
+    class InvalidObjectiveError extends HotpotUserError {
+        public InvalidObjectiveError(String message) {
+            super(String.format("There are invalid objectives: %s", message));
+        }
+    }
+
     class ServiceObjectiveLoadError extends HotpotInternalError {
         public ServiceObjectiveLoadError(String message, Throwable cause) {
             super(message, cause);

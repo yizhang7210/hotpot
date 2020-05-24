@@ -1,0 +1,15 @@
+- id: 'documentation'
+  description: Service should have publicly visible documentation
+  criteria:
+    - metricId: 'doc-location'
+      transform: length
+      condition: gt/0
+- id: 'release-frequency'
+  description: |
+    Service should maintain a reasonable release frequency while
+    keeping the rollback rate low
+  criteria:
+    - metricId: 'average-releases'
+      condition: gt/1
+    - metricId: 'percentage-rollback'
+      condition: lt/0.2

@@ -11,3 +11,4 @@ hotpot:
     enabled: true
     provider-type: yaml
     metrics-definition: metrics.yaml
+    objectives-definition: objectives.yaml

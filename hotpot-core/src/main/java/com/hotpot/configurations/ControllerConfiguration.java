@@ -7,13 +7,15 @@ import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
-import com.hotpot.domain.exceptions.UserError;
+import com.hotpot.domain.exceptions.HotpotUserError;
+import com.hotpot.domain.exceptions.HotpotInternalError;
 import com.hotpot.utils.LoggingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -53,11 +55,20 @@ public class ControllerConfiguration {
     @ControllerAdvice
     public static class ErrorHandler {
 
-        @ExceptionHandler(UserError.class)
-        public ResponseEntity<Map<String, String>> userErrorHandler(UserError error) {
-            log.info("Handling a UserError from the api");
+        @ExceptionHandler(HotpotUserError.class)
+        public ResponseEntity<Map<String, String>> userErrorHandler(HotpotUserError error) {
+            log.error("Handling a UserError from the api", error);
             return ResponseEntity
                 .badRequest()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(error.toDto());
+        }
+
+        @ExceptionHandler(HotpotInternalError.class)
+        public ResponseEntity<Map<String, String>> internalErrorHandler(HotpotInternalError error) {
+            log.error("Handling an InternalError from the api", error);
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(error.toDto());
         }

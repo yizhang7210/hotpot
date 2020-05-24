@@ -18,7 +18,7 @@ import java.util.List;
 public class DocumentationDataProvider implements ServiceDataProvider {
 
     private static final List<MetricId> PROVIDED_METRICS = List.of(
-        Metrics.DOCUMENTATION_PRESENT.getMetricId()
+        Metrics.DOCUMENTATION_LOCATION.getMetricId()
     );
 
     @Override
@@ -28,11 +28,11 @@ public class DocumentationDataProvider implements ServiceDataProvider {
 
     @Override
     public <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId) {
-        boolean success = serviceId.getValue().length() < 10;
+        String location = "https://mydocs.com/" + serviceId.getValue();
         return new ServiceMetricValue<>(
             metric,
             Instant.now(),
-            metric.getMetricType().cast(success)
+            metric.getMetricType().cast(location)
         );
     }
 }

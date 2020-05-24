@@ -29,14 +29,14 @@ and its frontend at [hotpot-front-end](./hotpot-app-frontend).
     ```
 1. Create beans that implement the following interfaces:
     ```yaml
-    - ServiceIdentityProvider (only 1): to provide all the service identifiers
+    - ServiceIdentityProvider (exactly 1): to provide all the service identifiers
     - ServiceMetaDataProvider (1 or more): to provide metadata given a service identifier
     - ServiceTransformer (0 or 1): to transform a service object to a data transfer object (DTO) for the API response
     ```
 1. If `hotpot.metrics.enabled` is true, then create beans that implement the following interfaces:
     ```yaml
-    - ServiceMetricProvider (only 1): to provide all the service level metrics
-    - ServiceObjectiveProvider (only 1): to provide all the service level objectives
+    - ServiceMetricProvider (exactly 1): to provide all the service level metrics
+    - ServiceObjectiveProvider (exactly 1): to provide all the service level objectives
     - ServiceDataProvider (1 or moe): to provide the underlying data for each metric to detemine if they meet the objective
     - ServiceObjectiveTransformer (0 or 1): to transform a service objective object to a DTO for the API response
     ```

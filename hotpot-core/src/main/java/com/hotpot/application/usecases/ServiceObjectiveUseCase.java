@@ -7,7 +7,7 @@ import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.ServiceObjectiveResult;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
-import com.hotpot.domain.providers.ServiceObjectiveProvider.ObjectiveNotFoundError;
+import com.hotpot.domain.providers.ServiceObjectiveProvider.ObjectiveNotFoundErrorHotpot;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,14 +35,14 @@ public class ServiceObjectiveUseCase {
     public <T> T getObjectiveById(ObjectiveId objectiveId, Function<ServiceObjective, T> transformer) {
         return transformer.apply(
             serviceObjectiveProvider.getObjectiveById(objectiveId)
-                .orElseThrow(() -> new ObjectiveNotFoundError(objectiveId))
+                .orElseThrow(() -> new ObjectiveNotFoundErrorHotpot(objectiveId))
         );
     }
 
     public <T> Map<String, T> getObjectiveResultsById(ObjectiveId objectiveId, Function<ServiceObjectiveResult, T> transformer) {
 
         ServiceObjective objective = serviceObjectiveProvider
-            .getObjectiveById(objectiveId).orElseThrow(() -> new ObjectiveNotFoundError(objectiveId));
+            .getObjectiveById(objectiveId).orElseThrow(() -> new ObjectiveNotFoundErrorHotpot(objectiveId));
 
         Collection<ServiceId> serviceIds = serviceIdentityProvider.getServiceIds();
 

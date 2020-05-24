@@ -1,0 +1,14 @@
+- id: 'doc-location'
+  type: 'String'
+  timeSpan: 'PT0S'
+  description: |
+    Location of the service's `documentation`
+    and more
+- id: 'average-releases'
+  type: 'Double'
+  timeSpan: 'PT720H'
+  description: "Average number of releases for the past 30 days"
+- id: 'percentage-rollback'
+  type: 'Double'
+  timeSpan: 'PT720H'
+  description: "Percentage rollback for the past 30 days"

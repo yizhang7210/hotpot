@@ -3,8 +3,8 @@ package com.hotpot.domain;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class ServiceObjectiveEvaluator {
 
     private final ServiceDataSourcePicker serviceDataSourcePicker;

@@ -4,7 +4,6 @@ package com.hotpotapp.providers;
 import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ObjectiveId;
 import com.hotpot.domain.ServiceMetric;
-import com.hotpot.domain.ServiceMetricValue;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
@@ -30,8 +29,8 @@ public class DemoServiceObjectiveProvider implements ServiceObjectiveProvider {
                 "Every service should have documentation",
                 List.of(
                     new Criterion<>(
-                        (ServiceMetric<Boolean>) serviceMetricProvider.getById(Metrics.DOCUMENTATION_PRESENT.getMetricId()),
-                        ServiceMetricValue::getValue)
+                        (ServiceMetric<String>) serviceMetricProvider.getById(Metrics.DOCUMENTATION_LOCATION.getMetricId()),
+                        value -> value.getValue().length() > 0)
                 )
             ),
             ServiceObjective.of(

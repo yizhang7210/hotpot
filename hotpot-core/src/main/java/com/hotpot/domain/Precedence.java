@@ -1,6 +1,6 @@
 package com.hotpot.domain;
 
-import com.hotpot.domain.exceptions.UserError;
+import com.hotpot.domain.exceptions.HotpotUserError;
 import lombok.Getter;
 
 @Getter
@@ -19,11 +19,11 @@ public class Precedence {
         if (value >= LOWEST && value <= HIGHEST) {
             return new Precedence(value);
         }
-        throw new PrecedenceOutOfRangeError(value);
+        throw new PrecedenceOutOfRangeErrorHotpot(value);
     }
 
-    static class PrecedenceOutOfRangeError extends UserError {
-        public PrecedenceOutOfRangeError(int value) {
+    static class PrecedenceOutOfRangeErrorHotpot extends HotpotUserError {
+        public PrecedenceOutOfRangeErrorHotpot(int value) {
             super(String.format(
                 "OverrideOrder out of range. It should be between %d and %d. Not %d.",
                 LOWEST, HIGHEST, value)

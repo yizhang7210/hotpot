@@ -9,3 +9,6 @@ hotpot:
     enabled: true
   slo:
     enabled: true
+  metrics:
+    provider-type: yaml
+    metrics-definition: metrics.yaml

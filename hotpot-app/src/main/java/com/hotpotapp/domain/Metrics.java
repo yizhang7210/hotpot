@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 public enum Metrics {
-    DOCUMENTATION_PRESENT(MetricId.of("documentation-present")),
-    AVERAGE_RELEASES_PER_DAY(MetricId.of("average-releases-per-day")),
-    OVERALL_ROLLBACK_PERCENTAGE(MetricId.of("rollbacks-percentage"));
+    DOCUMENTATION_LOCATION(MetricId.of("doc-location")),
+    AVERAGE_RELEASES_PER_DAY(MetricId.of("average-releases")),
+    OVERALL_ROLLBACK_PERCENTAGE(MetricId.of("percentage-rollback"));
 
     private final MetricId metricId;
 

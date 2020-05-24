@@ -38,7 +38,7 @@ bintray {
 
     pkg {
         repo = 'hotpot'
-        name = 'hotpot-core'
+        name = project.name
     }
 
 }

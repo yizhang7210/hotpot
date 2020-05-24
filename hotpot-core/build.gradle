@@ -68,8 +68,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework:spring-web"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.0.1"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.0"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'

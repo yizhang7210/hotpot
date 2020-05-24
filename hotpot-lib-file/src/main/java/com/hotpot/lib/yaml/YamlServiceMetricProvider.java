@@ -1,4 +1,4 @@
-package com.hotpot.plugins;
+package com.hotpot.lib.yaml;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

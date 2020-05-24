@@ -45,9 +45,9 @@ public class ControllerConfigurationTest {
     }
 
     @Test
-    public void service_object_controller_is_present_when_slo_is_enabled() {
+    public void service_object_controller_is_present_when_metrics_is_enabled() {
         this.contextRunner
-            .withPropertyValues("hotpot.slo.enabled=true")
+            .withPropertyValues("hotpot.metrics.enabled=true")
             .withUserConfiguration(TestFallbackBeanConfiguration.class)
             .run((context) -> {
                 assertThat(context).hasSingleBean(ServiceController.class);

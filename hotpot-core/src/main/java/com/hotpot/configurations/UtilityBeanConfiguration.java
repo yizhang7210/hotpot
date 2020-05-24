@@ -22,7 +22,7 @@ import java.util.List;
 public class UtilityBeanConfiguration {
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     public ServiceDataSourcePicker serviceDataSourcePicker(
         List<ServiceDataProvider> serviceDataProviders
     ) {
@@ -31,7 +31,7 @@ public class UtilityBeanConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     public ServiceObjectiveEvaluator serviceObjectiveEvaluator(
         ServiceDataSourcePicker serviceDataSourcePicker
     ) {

@@ -52,7 +52,7 @@ public class DefaultBeanConfigurationTest {
     @Test
     public void default_service_objective_transformers_are_present_if_no_custom_bean_and_enabled() {
         this.contextRunner
-            .withPropertyValues("hotpot.slo.enabled=true")
+            .withPropertyValues("hotpot.metrics.enabled=true")
             .run((context) -> {
                 assertThat(context).hasSingleBean(DefaultServiceTransformer.class);
                 assertThat(context).hasSingleBean(DefaultServiceObjectiveTransformer.class);
@@ -63,7 +63,7 @@ public class DefaultBeanConfigurationTest {
     @Test
     public void custom_service_objective_transformers_are_present_if_exist_and_enabled() {
         this.contextRunner
-            .withPropertyValues("hotpot.slo.enabled=true")
+            .withPropertyValues("hotpot.metrics.enabled=true")
             .withUserConfiguration(TestFallbackBeanConfiguration.class)
             .run((context) -> {
                 assertThat(context).hasSingleBean(TestServiceTransformer.class);

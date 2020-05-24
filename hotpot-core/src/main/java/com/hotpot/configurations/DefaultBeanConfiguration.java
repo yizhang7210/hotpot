@@ -29,7 +29,7 @@ public class DefaultBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(ServiceObjectiveTransformer.class)
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     public ServiceObjectiveTransformer<ServiceObjective, ServiceObjective> serviceObjectiveTransformer() {
         LoggingUtils.logBeanName(log, DefaultServiceObjectiveTransformer.class);
         return new DefaultServiceObjectiveTransformer();
@@ -37,7 +37,7 @@ public class DefaultBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(ServiceObjectiveResultTransformer.class)
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     public ServiceObjectiveResultTransformer<ServiceObjectiveResult> serviceObjectiveResultTransformer() {
         LoggingUtils.logBeanName(log, DefaultServiceObjectiveResultTransformer.class);
         return new DefaultServiceObjectiveResultTransformer();

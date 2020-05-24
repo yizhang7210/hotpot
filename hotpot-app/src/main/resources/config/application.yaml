@@ -7,8 +7,7 @@ hotpot:
   web-api:
     base-url: "v1"
     enabled: true
-  slo:
-    enabled: true
   metrics:
+    enabled: true
     provider-type: yaml
     metrics-definition: metrics.yaml

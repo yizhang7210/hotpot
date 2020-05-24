@@ -36,7 +36,7 @@ public class UseCaseConfigurationTest {
     @Test
     public void service_objective_use_case_is_present_when_enabled() {
         this.contextRunner
-            .withPropertyValues("hotpot.slo.enabled=true")
+            .withPropertyValues("hotpot.metrics.enabled=true")
             .withUserConfiguration(TestFallbackBeanConfiguration.class)
             .run((context) -> {
                 assertThat(context).hasSingleBean(ServiceUseCase.class);
@@ -47,7 +47,7 @@ public class UseCaseConfigurationTest {
     @Test
     public void service_objective_use_case_is_not_present_when_provider_does_not_exist() {
         this.contextRunner
-            .withPropertyValues("hotpot.slo.enabled=true")
+            .withPropertyValues("hotpot.metrics.enabled=true")
             .run((context) -> {
                 assertThat(context).hasSingleBean(ServiceUseCase.class);
                 assertThat(context).doesNotHaveBean(ServiceObjectiveUseCase.class);

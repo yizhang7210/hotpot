@@ -38,7 +38,7 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     public <U, V, W> ServiceObjectiveController<U, V, W> serviceObjectiveController(
         ServiceObjectiveUseCase serviceObjectiveUseCase,
         ServiceObjectiveTransformer<U, V> serviceObjectiveTransformer,

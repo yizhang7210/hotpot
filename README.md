@@ -24,18 +24,19 @@ and its frontend at [hotpot-front-end](./hotpot-app-frontend).
         enabled: <enabled>    # default: true. Web API endpoints will be exposed.
         base-url: <base-url>  # default: "". Web API endpoints will be exposed under the <base-url> subpath
 
-      slo:
-        enabled: <enabled>    # default: false. Enable exposing service level objectives.
+      metrics:
+        enabled: <enabled>    # default: false. Enable gathering and surfacing service level metrics and objectives.
     ```
 1. Create beans that implement the following interfaces:
     ```yaml
-    - ServiceIdentityProvider: to provide all the service identifiers
-    - ServiceMetaDataProvider (can be multiple): to provide metadata given a service identifier
-    - ServiceTransformer (optional): to transform a service object to a data transfer object (DTO) for the API response
+    - ServiceIdentityProvider (only 1): to provide all the service identifiers
+    - ServiceMetaDataProvider (1 or more): to provide metadata given a service identifier
+    - ServiceTransformer (0 or 1): to transform a service object to a data transfer object (DTO) for the API response
     ```
-1. If `hotpot.slo.enabled` is true, then create beans that implement the following interfaces:
+1. If `hotpot.metrics.enabled` is true, then create beans that implement the following interfaces:
     ```yaml
-    - ServiceObjective (can be multiple): to define a service level objective
-    - ServiceObjectiveProvider: to provide all the service level objectives
-    - ServiceObjectiveTransformer (optional): to transform a service objective object to a DTO for the API response
+    - ServiceMetricProvider (only 1): to provide all the service level metrics
+    - ServiceObjectiveProvider (only 1): to provide all the service level objectives
+    - ServiceDataProvider (1 or moe): to provide the underlying data for each metric to detemine if they meet the objective
+    - ServiceObjectiveTransformer (0 or 1): to transform a service objective object to a DTO for the API response
     ```

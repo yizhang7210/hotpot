@@ -31,7 +31,7 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.slo.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
     @ConditionalOnBean(ServiceObjectiveProvider.class)
     public ServiceObjectiveUseCase serviceObjectiveUseCase(
         ServiceObjectiveProvider serviceObjectiveProvider,

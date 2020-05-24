@@ -8,6 +8,10 @@ public class HotpotError extends RuntimeException {
         super(message);
     }
 
+    public HotpotError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
     public Map<String, String> toDto() {
         return new HashMap<>() {{
             put("message", getMessage());

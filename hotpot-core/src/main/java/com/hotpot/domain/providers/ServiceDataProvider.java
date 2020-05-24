@@ -12,14 +12,14 @@ public interface ServiceDataProvider {
 
     <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId);
 
-    class DataProviderNotFoundErrorHotpot extends HotpotUserError {
-        public DataProviderNotFoundErrorHotpot(MetricId metricId) {
+    class DataProviderNotFoundError extends HotpotUserError {
+        public DataProviderNotFoundError(MetricId metricId) {
             super(String.format("Cannot find a data provider for %s.", metricId.getValue()));
         }
     }
 
-    class MultipleDataProviderErrorHotpot extends HotpotUserError {
-        public MultipleDataProviderErrorHotpot(MetricId metricId) {
+    class MultipleDataProviderError extends HotpotUserError {
+        public MultipleDataProviderError(MetricId metricId) {
             super(String.format("There are multiple data providers for %s.", metricId.getValue()));
         }
     }

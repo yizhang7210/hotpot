@@ -26,9 +26,9 @@ public class ServiceDataSourcePicker {
             .collect(Collectors.toList());
 
         if (providers.size() < 1) {
-            throw new ServiceDataProvider.DataProviderNotFoundErrorHotpot(metricId);
+            throw new ServiceDataProvider.DataProviderNotFoundError(metricId);
         } else if (providers.size() > 1) {
-            throw new ServiceDataProvider.MultipleDataProviderErrorHotpot(metricId);
+            throw new ServiceDataProvider.MultipleDataProviderError(metricId);
         } else {
             ServiceDataProvider provider = providers.get(0);
             cachedMap.put(metricId, provider);

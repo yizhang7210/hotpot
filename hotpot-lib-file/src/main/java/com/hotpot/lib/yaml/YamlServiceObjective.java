@@ -25,6 +25,7 @@ public class YamlServiceObjective {
         return ServiceObjective.of(
             ObjectiveId.of(id),
             description,
+            r -> true,
             criteria.stream()
                 .map(c -> c.toCriterion(getMetricById(metrics, c.getMetricId())))
                 .collect(Collectors.toList())

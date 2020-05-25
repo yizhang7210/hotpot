@@ -1,7 +1,8 @@
 package com.hotpot.application.usecases;
 
 import com.hotpot.domain.ObjectiveId;
-import com.hotpot.domain.ServiceId;
+import com.hotpot.domain.Service;
+import com.hotpot.domain.ServiceConstructor;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.ServiceObjectiveResult;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,7 @@ public class ServiceObjectiveUseCase {
     private final ServiceIdentityProvider serviceIdentityProvider;
     private final ServiceObjectiveProvider serviceObjectiveProvider;
     private final ServiceObjectiveEvaluator serviceObjectiveEvaluator;
+    private final ServiceConstructor serviceConstructor;
 
     public <T> List<T> getServiceObjectives(Function<ServiceObjective, T> transformer) {
         return serviceObjectiveProvider.getObjectives()
@@ -44,13 +47,15 @@ public class ServiceObjectiveUseCase {
         ServiceObjective objective = serviceObjectiveProvider
             .getObjectiveById(objectiveId).orElseThrow(() -> new ObjectiveNotFoundError(objectiveId));
 
-        Collection<ServiceId> serviceIds = serviceIdentityProvider.getServiceIds();
+        Collection<Service> services = serviceConstructor.getServices(serviceIdentityProvider.getServiceIds());
 
-        return serviceIds
+        return services
             .stream()
+            .map(service -> serviceObjectiveEvaluator.runOnService(objective, service))
+            .flatMap(Optional::stream)
             .collect(Collectors.toMap(
-                ServiceId::getValue,
-                sid -> transformer.apply(serviceObjectiveEvaluator.runOnService(objective, sid))
+                result -> result.getServiceId().getValue(),
+                transformer
             ));
     }
 

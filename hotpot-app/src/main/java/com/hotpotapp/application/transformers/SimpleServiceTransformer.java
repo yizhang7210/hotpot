@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,7 +41,9 @@ public class SimpleServiceTransformer implements ServiceTransformer<SimpleServic
 
         Map<String, SimpleServiceObjectiveResultDto> results = serviceObjectiveProvider.getObjectives()
             .stream()
-            .map(o -> serviceObjectiveEvaluator.runOnService(o, service.getId()))
+            .filter(o -> o.getIsApplicableTo().test(service))
+            .map(o -> serviceObjectiveEvaluator.runOnService(o, service))
+            .flatMap(Optional::stream)
             .collect(Collectors.toMap(sor -> sor.getObjectiveId().getValue(), resultTransformer::toDto));
 
         return new ServiceWithResults(service, results);

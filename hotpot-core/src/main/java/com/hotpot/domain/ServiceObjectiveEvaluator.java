@@ -3,18 +3,31 @@ package com.hotpot.domain;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Slf4j
 @AllArgsConstructor
 public class ServiceObjectiveEvaluator {
 
     private final ServiceDataSourcePicker serviceDataSourcePicker;
 
-    public ServiceObjectiveResult runOnService(ServiceObjective objective, ServiceId serviceId) {
+    public Optional<ServiceObjectiveResult> runOnService(ServiceObjective objective, Service service) {
+
+        if (!objective.getIsApplicableTo().test(service)) {
+            return Optional.empty();
+        }
+
         boolean success = objective.getCriteria()
             .stream()
-            .allMatch(criterion -> checkForService(criterion, serviceId));
+            .allMatch(criterion -> checkForService(criterion, service.getId()));
 
-        return new ServiceObjectiveResult(serviceId, objective.getId(), ServiceObjectiveResult.Status.fromBoolean(success));
+        return Optional.of(
+            new ServiceObjectiveResult(
+                service.getId(),
+                objective.getId(),
+                ServiceObjectiveResult.Status.fromBoolean(success)
+            )
+        );
     }
 
     private <T> boolean checkForService(Criterion<T> criterion, ServiceId serviceId) {

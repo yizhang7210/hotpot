@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 @Data
@@ -32,14 +33,15 @@ public class YamlCriterion {
     }
 
     public <T> Criterion<T> toCriterion(ServiceMetric<T> metric) {
+        Predicate<ServiceMetricValue<T>> nonNull = Objects::nonNull;
         return new Criterion<>(
             metric,
-            toPredicate(metric)
+            nonNull.and(toCondition(metric))
         );
     }
 
     @SneakyThrows
-    private <T> Predicate<ServiceMetricValue<T>> toPredicate(ServiceMetric<T> metric) {
+    private <T> Predicate<ServiceMetricValue<T>> toCondition(ServiceMetric<T> metric) {
         String[] elements = condition.split("/");
         if (elements.length != 2) {
             throw new InvalidObjectiveError("The condition has to be 2 parts, split by " + SPLITTER);

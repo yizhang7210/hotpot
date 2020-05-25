@@ -42,6 +42,7 @@ public class ReleaseDataProvider implements ServiceDataProvider {
 
         if (metric.getId().equals(Metrics.AVERAGE_RELEASES_PER_DAY.getMetricId())) {
             return new ServiceMetricValue<>(
+                serviceId,
                 metric,
                 Instant.now(),
                 metric.getMetricType().cast(getAverageReleases(serviceId, from, to))
@@ -49,6 +50,7 @@ public class ReleaseDataProvider implements ServiceDataProvider {
 
         } else if (metric.getId().equals(Metrics.OVERALL_ROLLBACK_PERCENTAGE.getMetricId())) {
             return new ServiceMetricValue<>(
+                serviceId,
                 metric,
                 Instant.now(),
                 metric.getMetricType().cast(getRollbackPercentage(serviceId, from, to))

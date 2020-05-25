@@ -1,11 +1,11 @@
 <template>
-    <div class="objective-details">
-        <p class="objective-title">Service Objective: {{ this.$route.params.oid }}</p>
+    <div class="metric-details">
+        <p class="metric-title"> Service Metric: {{ this.$route.params.mid }}</p>
 
         <b-tabs lazy>
             <b-tab title="Basic Information" active>
-                <div class="objective-details-list">
-                    <dl class="objective-detail" v-for="detail in this.details" :key="detail.key">
+                <div class="metric-details-list">
+                    <dl class="metric-detail" v-for="detail in this.details" :key="detail.key">
                         <dt>
                             {{detail.display}}
                         </dt>
@@ -18,15 +18,15 @@
                 </div>
             </b-tab>
 
-            <b-tab title="Service Objective Results">
-                <div class="objective-details-list">
-                    <dl class="objective-detail" v-for="result in this.serviceResults" :key="result.serviceId">
+            <b-tab title="Service Metric Values">
+                <div class="metric-details-list">
+                    <dl class="metric-detail" v-for="result in this.serviceResults" :key="result.serviceId">
                         <dt>
                             {{result.serviceId}}
                         </dt>
                         <dd>
-                            <span v-bind:class="{warning: !result.status}">
-                                {{ result.status || 'Not Available'}}
+                            <span v-bind:class="{warning: !result.value}">
+                                {{ result.value || 'Not Available'}}
                             </span>
                         </dd>
                     </dl>
@@ -38,9 +38,10 @@
 
 <script>
   import http from '../utils/http'
+  import moment from 'moment'
 
   export default {
-    name: 'ObjectiveDetails',
+    name: 'MetricDetails',
     data() {
       return {
         details: null,
@@ -53,15 +54,26 @@
     computed: {},
     methods: {
       populateService: async function () {
-        const response = await http.get(`v1/objectives/${this.$route.params.oid}`);
-        const objective = response.data.objective;
+        const response = await http.get(`v1/metrics/${this.$route.params.mid}`);
+        const metric = response.data.metric;
         this.serviceResults = response.data.results;
+
+        Object.keys(this.serviceResults).forEach((key) => {
+          if (!Number.isNaN(Number.parseFloat(this.serviceResults[key].value))) {
+            this.serviceResults[key].value = Number.parseFloat(this.serviceResults[key].value).toFixed(2);
+          }
+        });
 
         this.details = [
           {
             key: "description",
             display: "Description",
-            value: objective.description
+            value: metric.description
+          },
+          {
+            key: "timeSpan",
+            display: "Measured over",
+            value: moment.duration(metric.timeSpan).humanize()
           }
         ];
 
@@ -70,23 +82,23 @@
   }
 </script>
 <style scoped lang="scss">
-    .objective-details {
+    .metric-details {
         align-self: center;
         width: $main-section-max-width;
     }
 
-    .objective-title {
-        margin: $small-margin;
+    .metric-title {
         font-size: $section-title-font-size;
+        margin: $small-margin;
     }
 
-    .objective-detail {
+    .metric-detail {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
         padding: 0 $small-padding;
     }
 
-    .objective-details-list {
+    .metric-details-list {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;

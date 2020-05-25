@@ -1,6 +1,6 @@
 <template>
     <div class="service-details">
-        <p class="service-title">{{ this.$route.params.sid }}</p>
+        <p class="service-title"> Service: {{ this.$route.params.sid }} </p>
 
         <div>
             <b-tabs lazy>
@@ -22,7 +22,9 @@
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in this.objectiveResults" :key="result.objectiveId">
                             <dt>
-                                {{result.objectiveId}}
+                                <router-link :to="'/objectives/' + result.objectiveId">
+                                    {{result.objectiveId}}
+                                </router-link>
                             </dt>
                             <dd>
                                 <span v-bind:class="{warning: !result.status}">
@@ -116,10 +118,10 @@
     .service-details {
         align-self: center;
         width: $main-section-max-width;
-        margin: $small-margin;
     }
 
     .service-title {
+        margin: $small-margin;
         font-size: $section-title-font-size;
     }
 

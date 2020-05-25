@@ -3,6 +3,7 @@ package com.hotpot.lib.yaml;
 
 import com.hotpot.domain.Criterion;
 import com.hotpot.domain.MetricId;
+import com.hotpot.domain.ServiceId;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceMetricValue;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.InvalidObjectiveError;
@@ -26,6 +27,7 @@ public class YamlCriterionTest {
     @CsvSource(value = { "eq:false:true:false", "lt:false:false:true", "gt:true:false:false" }, delimiter = ':')
     public void valid_integer_criteria_should_work(String operator, boolean testFor3, boolean testFor1, boolean testFor0) {
         //Given
+        ServiceId sId = ServiceId.of("sid");
         ServiceMetric<Integer> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Integer.class);
 
         // When
@@ -33,15 +35,16 @@ public class YamlCriterionTest {
         Criterion<Integer> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
-        assertEquals(testFor3, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), 3)));
-        assertEquals(testFor1, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), 1)));
-        assertEquals(testFor0, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), 0)));
+        assertEquals(testFor3, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), 3)));
+        assertEquals(testFor1, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), 1)));
+        assertEquals(testFor0, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), 0)));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"lt:false:true", "gt:true:false" }, delimiter = ':')
     public void valid_double_criteria_should_work(String operator, boolean testFor3, boolean testFor1) {
         //Given
+        ServiceId sId = ServiceId.of("sid");
         ServiceMetric<Double> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Double.class);
 
         // When
@@ -49,14 +52,15 @@ public class YamlCriterionTest {
         Criterion<Double> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
-        assertEquals(testFor3, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), 3.0)));
-        assertEquals(testFor1, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), 1.0)));
+        assertEquals(testFor3, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), 3.0)));
+        assertEquals(testFor1, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), 1.0)));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"true:true:false", "false:false:true" }, delimiter = ':')
     public void valid_boolean_criteria_should_work(String threshold, boolean testForTrue, boolean testForFalse) {
         //Given
+        ServiceId sId = ServiceId.of("sid");
         ServiceMetric<Boolean> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Boolean.class);
 
         // When
@@ -64,14 +68,15 @@ public class YamlCriterionTest {
         Criterion<Boolean> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
-        assertEquals(testForTrue, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), true)));
-        assertEquals(testForFalse, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), false)));
+        assertEquals(testForTrue, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), true)));
+        assertEquals(testForFalse, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), false)));
     }
 
     @ParameterizedTest
     @CsvSource(value = { "fffff:false:true:false", "abcde:true:false:false", "kkk:false:false:false" }, delimiter = ':')
     public void valid_string_criteria_no_transform_should_work(String threshold, boolean result1, boolean result2, boolean result3) {
         //Given
+        ServiceId sId = ServiceId.of("sid");
         ServiceMetric<String> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, String.class);
 
         // When
@@ -79,15 +84,16 @@ public class YamlCriterionTest {
         Criterion<String> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
-        assertEquals(result1, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "abcde")));
-        assertEquals(result2, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "fffff")));
-        assertEquals(result3, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "")));
+        assertEquals(result1, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "abcde")));
+        assertEquals(result2, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "fffff")));
+        assertEquals(result3, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "")));
     }
 
     @ParameterizedTest
     @CsvSource(value = { "eq:false:true:false", "lt:false:false:true", "gt:true:false:false" }, delimiter = ':')
     public void valid_string_criteria_with_transform_should_work(String operator, boolean result1, boolean result2, boolean result3) {
         //Given
+        ServiceId sId = ServiceId.of("sid");
         ServiceMetric<String> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, String.class);
 
         // When
@@ -95,9 +101,9 @@ public class YamlCriterionTest {
         Criterion<String> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
-        assertEquals(result1, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "abcde")));
-        assertEquals(result2, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "123")));
-        assertEquals(result3, criterion.getCondition().test(new ServiceMetricValue<>(metric, Instant.now(), "")));
+        assertEquals(result1, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "abcde")));
+        assertEquals(result2, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "123")));
+        assertEquals(result3, criterion.getCondition().test(new ServiceMetricValue<>(sId, metric, Instant.now(), "")));
     }
 
     @Test

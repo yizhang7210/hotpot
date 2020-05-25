@@ -1,7 +1,9 @@
 import Home from './components/Home.vue'
-import ServiceDetails from './components/ServiceDetails.vue'
-import ObjectiveList from './components/ObjectiveList.vue'
+import MetricDetails from './components/MetricDetails.vue'
+import MetricList from './components/MetricList.vue'
 import ObjectiveDetails from "./components/ObjectiveDetails";
+import ObjectiveList from './components/ObjectiveList.vue'
+import ServiceDetails from './components/ServiceDetails.vue'
 
 export default [
   {
@@ -23,5 +25,13 @@ export default [
   {
     path: '/objectives/:oid',
     component: ObjectiveDetails,
+  },
+  {
+    path: '/metrics',
+    component: MetricList,
+  },
+  {
+    path: '/metrics/:mid',
+    component: MetricDetails,
   }
 ];

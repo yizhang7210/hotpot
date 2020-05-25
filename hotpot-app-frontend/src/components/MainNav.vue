@@ -3,6 +3,7 @@
     <b-navbar-brand to="/home"> Hotpot Demo </b-navbar-brand>
     <b-navbar-brand class="nav-button" to="/home"> Services </b-navbar-brand>
     <b-navbar-brand class="nav-button" to="/objectives"> Objectives </b-navbar-brand>
+    <b-navbar-brand class="nav-button" to="/metrics"> Metrics </b-navbar-brand>
   </b-navbar>
 </template>
 

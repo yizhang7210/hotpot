@@ -14,6 +14,7 @@ public class SimpleServiceMetricValueTransformer implements ServiceMetricValueTr
     public SimpleServiceMetricValueDto toDto(ServiceMetricValue<?> metricValue) {
         return new SimpleServiceMetricValueDto(
             metricValue.getMetric().getId().getValue(),
+            metricValue.getServiceId().getValue(),
             metricValue.getMeasuredAt().toString(),
             metricValue.getValue().toString()
         );

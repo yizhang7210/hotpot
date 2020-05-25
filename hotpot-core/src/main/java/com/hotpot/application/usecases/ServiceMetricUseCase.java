@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -48,9 +49,11 @@ public class ServiceMetricUseCase {
 
         return serviceIdentityProvider.getServiceIds()
             .stream()
+            .map(sId -> dataProvider.getForService(metric, sId))
+            .filter(Objects::nonNull)
             .collect(Collectors.toMap(
-                ServiceId::getValue,
-                sId -> transformer.apply(dataProvider.getForService(metric, sId))
+                metricValue -> metricValue.getServiceId().getValue(),
+                transformer
             ));
     }
 

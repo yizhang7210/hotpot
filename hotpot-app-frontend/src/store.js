@@ -10,6 +10,7 @@ export default new Vuex.Store({
 	state: {
 		services: [],
 		objectives: [],
+		metrics: [],
 	},
 	mutations: {
 		updateServices(state, services) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
 		},
 		updateObjectives(state, objectives) {
 			state.objectives = objectives;
+		},
+		updateMetrics(state, metrics) {
+			state.metrics = metrics;
 		},
 	},
 	actions: {
@@ -27,6 +31,10 @@ export default new Vuex.Store({
 		async fetchAllObjectives(context) {
 			const objectives = await http.get('v1/objectives');
 			context.commit('updateObjectives', objectives.data);
+		},
+		async fetchAllMetrics(context) {
+			const metrics = await http.get('v1/metrics');
+			context.commit('updateMetrics', metrics.data);
 		}
 	}
 })

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -32,15 +33,16 @@ public class YamlServiceObjective {
         return ServiceObjective.of(
             ObjectiveId.of(id),
             description,
-            constructPredicate(),
+            toIsApplicableTo(),
             criteria.stream()
                 .map(c -> c.toCriterion(getMetricById(metrics, c.getMetricId())))
                 .collect(Collectors.toList())
         );
     }
 
-    private Predicate<Service> constructPredicate() {
-        return service -> {
+    private Predicate<Service> toIsApplicableTo() {
+        Predicate<Service> nonNull = Objects::nonNull;
+        return nonNull.and(service -> {
             boolean success = true;
             if (include != null) {
                 success = include.stream().anyMatch(f -> f.toPredicate().test(service));
@@ -49,7 +51,7 @@ public class YamlServiceObjective {
                 success = success && exclude.stream().noneMatch(f -> f.toPredicate().test(service));
             }
             return success;
-        };
+        });
     }
 
     private ServiceMetric<?> getMetricById(Collection<ServiceMetric<?>> metrics, String metricId) {
@@ -57,7 +59,7 @@ public class YamlServiceObjective {
             .filter(m -> m.getId().getValue().equals(metricId))
             .findFirst()
             .orElseThrow(() -> new ServiceObjectiveProvider.InvalidObjectiveError(
-                    String.format("%s objective contain metricId %s that are not defined.", id, metricId))
+                String.format("%s objective contain metricId %s that are not defined.", id, metricId))
             );
     }
 }

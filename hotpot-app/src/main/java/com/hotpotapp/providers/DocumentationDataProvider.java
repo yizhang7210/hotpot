@@ -28,8 +28,13 @@ public class DocumentationDataProvider implements ServiceDataProvider {
 
     @Override
     public <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId) {
+        if (serviceId.getValue().startsWith("s")) {
+            return null;
+        }
+
         String location = "https://mydocs.com/" + serviceId.getValue();
         return new ServiceMetricValue<>(
+            serviceId,
             metric,
             Instant.now(),
             metric.getMetricType().cast(location)

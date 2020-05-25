@@ -1,5 +1,13 @@
 - id: 'documentation'
   description: Service should have publicly visible documentation
+  include:
+    - field: tier
+      values: [1, 2]
+    - field: id
+      values: [empty-service]
+  exclude:
+    - field: id
+      values: [first-service]
   criteria:
     - metricId: 'doc-location'
       transform: length
@@ -8,6 +16,9 @@
   description: |
     Service should maintain a reasonable release frequency while
     keeping the rollback rate low
+  exclude:
+    - field: id
+      values: [empty-service]
   criteria:
     - metricId: 'average-releases'
       condition: gt/1

@@ -25,7 +25,6 @@ public class ServiceMetaData {
     public Optional<Tier> getTier() {
         return Optional.ofNullable(tier);
     }
-
     public Optional<Team> getOwner() {
         return Optional.ofNullable(owner);
     }

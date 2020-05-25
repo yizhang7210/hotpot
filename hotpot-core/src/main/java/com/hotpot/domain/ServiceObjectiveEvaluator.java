@@ -34,8 +34,7 @@ public class ServiceObjectiveEvaluator {
         ServiceMetric<T> metric = criterion.getMetric();
 
         return criterion.getCondition().test(
-            serviceDataSourcePicker.getDataProvider(metric.getId())
-                .getForService(metric, serviceId)
+            serviceDataSourcePicker.getDataProvider(metric.getId()).getForService(metric, serviceId)
         );
     }
 }

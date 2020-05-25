@@ -22,19 +22,19 @@ public class ServiceObjectiveController<U, V, W> {
     private final ServiceObjectiveResultTransformer<W> serviceObjectiveResultTransformer;
 
     @GetMapping("${hotpot.web-api.base-url}/objectives")
-    public ResponseEntity<List<U>> getObjectives() {
+    public ResponseEntity<List<U>> getServiceObjectives() {
         return ResponseEntity.ok(serviceObjectiveUseCase.getServiceObjectives(serviceObjectiveTransformer::toDto));
     }
 
     @GetMapping("${hotpot.web-api.base-url}/objectives/{objectiveId}")
-    public ResponseEntity<V> getObjectiveById(@PathVariable("objectiveId") String objectiveId) {
+    public ResponseEntity<V> getServiceObjectiveById(@PathVariable("objectiveId") String objectiveId) {
         return ResponseEntity.ok(
             serviceObjectiveUseCase.getObjectiveById(ObjectiveId.of(objectiveId), serviceObjectiveTransformer::toDetailedDto)
         );
     }
 
     @GetMapping("${hotpot.web-api.base-url}/objectives/{objectiveId}/results")
-    public ResponseEntity<Map<String, W>> getObjectiveResultsById(@PathVariable("objectiveId") String objectiveId) {
+    public ResponseEntity<Map<String, W>> getServiceObjectiveResultsById(@PathVariable("objectiveId") String objectiveId) {
         return ResponseEntity.ok(
             serviceObjectiveUseCase.getObjectiveResultsById(ObjectiveId.of(objectiveId), serviceObjectiveResultTransformer::toDto)
         );

@@ -1,10 +1,14 @@
 package com.hotpot.configurations;
 
 import com.hotpot.api.ServiceController;
+import com.hotpot.api.ServiceMetricController;
 import com.hotpot.api.ServiceObjectiveController;
+import com.hotpot.application.transformers.ServiceMetricTransformer;
+import com.hotpot.application.transformers.ServiceMetricValueTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
+import com.hotpot.application.usecases.ServiceMetricUseCase;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.exceptions.HotpotUserError;
@@ -51,6 +55,22 @@ public class ControllerConfiguration {
             serviceObjectiveResultTransformer
         );
     }
+
+    @Bean
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
+    public <U, V, W> ServiceMetricController<U, V, W> serviceMetricController(
+        ServiceMetricUseCase serviceMetricUseCase,
+        ServiceMetricTransformer<U, V> serviceMetricTransformer,
+        ServiceMetricValueTransformer<W> serviceMetricValueTransformer
+    ) {
+        LoggingUtils.logBeanName(log, ServiceMetricController.class);
+        return new ServiceMetricController<>(
+            serviceMetricUseCase,
+            serviceMetricTransformer,
+            serviceMetricValueTransformer
+        );
+    }
+
 
     @ControllerAdvice
     public static class ErrorHandler {

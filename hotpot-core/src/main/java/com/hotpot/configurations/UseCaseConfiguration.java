@@ -1,10 +1,13 @@
 package com.hotpot.configurations;
 
+import com.hotpot.application.usecases.ServiceMetricUseCase;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.application.usecases.ServiceUseCase;
 import com.hotpot.domain.ServiceConstructor;
+import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceObjectiveEvaluator;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
+import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import com.hotpot.utils.LoggingUtils;
 import lombok.AllArgsConstructor;
@@ -41,5 +44,16 @@ public class UseCaseConfiguration {
             serviceConstructor
         );
     }
+
+    @Bean
+    @ConditionalOnProperty(value = "hotpot.metrics.enabled", havingValue = "true")
+    public ServiceMetricUseCase serviceMetricUseCase(
+        ServiceMetricProvider serviceMetricProvider,
+        ServiceDataSourcePicker serviceDataSourcePicker
+    ) {
+        LoggingUtils.logBeanName(log, ServiceMetricUseCase.class);
+        return new ServiceMetricUseCase(serviceIdentityProvider, serviceMetricProvider, serviceDataSourcePicker);
+    }
+
 
 }

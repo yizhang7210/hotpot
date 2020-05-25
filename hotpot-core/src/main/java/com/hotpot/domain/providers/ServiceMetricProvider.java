@@ -12,7 +12,7 @@ public interface ServiceMetricProvider {
 
     Collection<ServiceMetric<?>> getAllMetrics();
 
-    Optional<ServiceMetric<?>> getById(MetricId metricId);
+    Optional<ServiceMetric<?>> getMetricById(MetricId metricId);
 
     class ServiceMetricNotFoundError extends HotpotUserError {
         public ServiceMetricNotFoundError(MetricId metricId) {

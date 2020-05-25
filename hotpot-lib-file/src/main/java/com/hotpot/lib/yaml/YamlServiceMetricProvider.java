@@ -52,7 +52,7 @@ public class YamlServiceMetricProvider implements ServiceMetricProvider {
     }
 
     @Override
-    public Optional<ServiceMetric<?>> getById(MetricId metricId) {
+    public Optional<ServiceMetric<?>> getMetricById(MetricId metricId) {
         return getAllMetrics().stream()
             .filter(m -> m.getId().equals(metricId))
             .findFirst();

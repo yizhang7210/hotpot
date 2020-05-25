@@ -3,10 +3,13 @@ package com.hotpot.configurations;
 import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.transformers.ServiceTransformer;
+import com.hotpot.domain.MetricId;
 import com.hotpot.domain.ObjectiveId;
 import com.hotpot.domain.Service;
+import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveResult;
+import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -79,5 +82,19 @@ public class TestFallbackBeanConfiguration {
         };
     }
 
+    @Bean
+    public ServiceMetricProvider serviceMetricProvider() {
+        return new ServiceMetricProvider() {
+            @Override
+            public Collection<ServiceMetric<?>> getAllMetrics() {
+                return List.of();
+            }
+
+            @Override
+            public Optional<ServiceMetric<?>> getMetricById(MetricId metricId) {
+                return Optional.empty();
+            }
+        };
+    }
 
 }

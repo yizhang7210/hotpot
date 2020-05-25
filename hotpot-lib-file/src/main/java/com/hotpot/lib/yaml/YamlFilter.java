@@ -2,12 +2,16 @@ package com.hotpot.lib.yaml;
 
 import com.hotpot.domain.Service;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.InvalidObjectiveError;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class YamlFilter {
     String field;
     List<String> values;

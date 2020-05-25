@@ -6,7 +6,9 @@ import com.hotpot.domain.Service;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Data
 @Slf4j
+@NoArgsConstructor
+@AllArgsConstructor
 public class YamlServiceObjective {
 
     private String id;

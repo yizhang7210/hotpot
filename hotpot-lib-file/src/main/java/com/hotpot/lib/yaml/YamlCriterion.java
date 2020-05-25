@@ -5,7 +5,9 @@ import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceMetricValue;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.InvalidObjectiveError;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +16,8 @@ import java.util.function.Predicate;
 
 @Data
 @Slf4j
+@AllArgsConstructor
+@NoArgsConstructor
 public class YamlCriterion {
     private String metricId;
     private String condition;
@@ -46,6 +50,10 @@ public class YamlCriterion {
 
         Class<?> type = metric.getMetricType();
 
+        if (!String.class.equals(type) && transform != null) {
+            throw new InvalidObjectiveError("Only supported transform on String type");
+        }
+
         if (Integer.class.equals(type)) {
             return integerPredicate(operator, threshold);
         }
@@ -76,14 +84,12 @@ public class YamlCriterion {
 
     private <T> Predicate<ServiceMetricValue<T>> doublePredicate(Operator operator, String threshold) {
         switch(operator) {
-            case eq:
-                return tValue -> tValue.getValue().equals(Double.parseDouble(threshold));
             case lt:
                 return tValue -> (Double) tValue.getValue() < Double.parseDouble(threshold);
             case gt:
                 return tValue -> (Double) tValue.getValue() > Double.parseDouble(threshold);
             default:
-                throw new InvalidObjectiveError(Arrays.toString(Operator.values()) + "are the supported operators for Double");
+                throw new InvalidObjectiveError("`lt` and `gt` are the supported operators for Double");
         }
     }
 

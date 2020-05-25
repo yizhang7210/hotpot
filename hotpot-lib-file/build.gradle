@@ -74,9 +74,17 @@ dependencies {
     // Use the published version, uncomment this line
     // implementation "com.hotpot:hotpot-core:${version}"
 
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
     // Lombok
     compileOnly lombok
     annotationProcessor lombok
     testCompileOnly lombok
     testAnnotationProcessor lombok
+}
+
+test {
+    useJUnitPlatform()
 }

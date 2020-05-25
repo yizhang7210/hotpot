@@ -18,7 +18,7 @@
                 </div>
             </b-tab>
 
-            <b-tab title="Service Objective Results" active>
+            <b-tab title="Service Objective Results">
                 <div class="objective-details-list">
                     <dl class="objective-detail" v-for="result in this.serviceResults" :key="result.serviceId">
                         <dt>

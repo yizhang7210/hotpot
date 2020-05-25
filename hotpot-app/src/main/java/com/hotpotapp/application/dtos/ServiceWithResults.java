@@ -2,13 +2,11 @@ package com.hotpotapp.application.dtos;
 
 
 import com.hotpot.domain.Service;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Map;
 
-@Data
-@AllArgsConstructor
+@Value
 public class ServiceWithResults {
     private final Service service;
     private final Map<String, SimpleServiceObjectiveResultDto> results;

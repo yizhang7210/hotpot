@@ -1,11 +1,9 @@
 package com.hotpotapp.application.dtos;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
+@Value
 public class SimpleServiceObjectiveResultDto {
     private String objectiveId;
     private String serviceId;

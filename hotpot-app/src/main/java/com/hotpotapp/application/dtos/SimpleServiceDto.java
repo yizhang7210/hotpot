@@ -1,9 +1,9 @@
 package com.hotpotapp.application.dtos;
 
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class SimpleServiceDto {
     private final String id;
     private final String tier;

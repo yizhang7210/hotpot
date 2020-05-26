@@ -3,8 +3,8 @@
         <p class="service-title"> Service: {{ $route.params.sid }} </p>
 
         <div>
-            <b-tabs lazy>
-                <b-tab title="Basic Information" active>
+            <b-tabs lazy v-model="tabIndex">
+                <b-tab title="Basic Information" @click="onTabClick(0)">
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="detail in details" :key="detail.key">
                             <dt>
@@ -18,7 +18,7 @@
                         </dl>
                     </div>
                 </b-tab>
-                <b-tab title="Service Objective Results">
+                <b-tab title="Service Objective Results" @click="onTabClick(1)">
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in objectiveResults" :key="result.objectiveId">
                             <dt>
@@ -34,7 +34,7 @@
                         </dl>
                     </div>
                 </b-tab>
-                <b-tab title="Service Metric Values">
+                <b-tab title="Service Metric Values" @click="onTabClick(2)">
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in metricResults" :key="result.metricId">
                             <dt>
@@ -66,14 +66,14 @@
       return {
         details: null,
         objectiveResults: null,
-        metricResults:null
+        metricResults:null,
+        tabIndex: this.$route.query.tab || 0
       }
     },
     mounted() {
       this.populateService();
       this.populateMetrics();
     },
-    computed: {},
     methods: {
       populateService: async function () {
         const response = await http.get(`v1/services/${this.$route.params.sid}`);
@@ -138,6 +138,9 @@
             this.metricResults[key].value = Number.parseFloat(this.metricResults[key].value).toFixed(2);
           }
         });
+      },
+      onTabClick: function(index) {
+        this.$router.push(this.$route.path + `?tab=${index}`)
       }
     },
   }

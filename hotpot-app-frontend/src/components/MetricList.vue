@@ -51,7 +51,7 @@
     },
     computed: {
       fields() {
-        return Object.keys(this.$store.state.metrics[0]).map(k => ({key: k, sortable: true}))
+        return ["id", "description"]
       }
     },
     methods: {

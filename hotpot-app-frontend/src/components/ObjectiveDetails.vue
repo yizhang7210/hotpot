@@ -2,8 +2,8 @@
     <div class="objective-details">
         <p class="objective-title">Objective: {{ $route.params.oid }}</p>
 
-        <b-tabs lazy>
-            <b-tab title="Basic Information" active>
+        <b-tabs lazy v-model="tabIndex">
+            <b-tab title="Basic Information" @click="onTabClick(0)">
                 <div class="objective-details-list">
                     <dl class="objective-detail">
                         <dt> Description</dt>
@@ -21,7 +21,7 @@
                 </div>
             </b-tab>
 
-            <b-tab title="Service Objective Results">
+            <b-tab title="Service Objective Results" @click="onTabClick(1)">
                 <div class="objective-details-list">
                     <dl class="objective-results" v-for="result in serviceResults" :key="result.serviceId">
                         <dt>
@@ -47,7 +47,8 @@
     data() {
       return {
         objective: {description: '', criteria: {}},
-        serviceResults: null
+        serviceResults: null,
+        tabIndex: this.$route.query.tab || 0
       }
     },
     mounted() {
@@ -58,6 +59,9 @@
         const response = await http.get(`v1/objectives/${this.$route.params.oid}`);
         this.objective = response.data.objective;
         this.serviceResults = response.data.results;
+      },
+      onTabClick: function(index) {
+        this.$router.push(this.$route.path + `?tab=${index}`)
       }
     },
   }

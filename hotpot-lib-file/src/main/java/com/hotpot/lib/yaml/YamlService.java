@@ -14,20 +14,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class YamlService {
 
-    private String id;
-    private YamlTier tier;
-    private String owner;
-    private String channel;
-    private YamlRepository repository;
-    private String selfLocation;
-    private String metricsLocation;
-    private String docsLocation;
-    private String logsLocation;
+    private List<YamlTier> tiers;
+    private List<YamlServiceData> services;
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -45,20 +41,48 @@ public class YamlService {
         private String location;
     }
 
-    public Service toService() {
-        return new Service(
-            ServiceId.of(id),
-            ServiceMetaData.builder()
-                .tier(tier == null ? null : Tier.of(tier.name, tier.description))
-                .owner(Team.of(TeamName.of(owner)))
-                .channel(Channel.of(channel))
-                .repository(repository == null ? null :
-                    CodeRepository.of(CodeRepositoryId.of(repository.name), Location.of(repository.location)))
-                .selfLocation(Location.of(selfLocation))
-                .metricsLocation(Location.of(metricsLocation))
-                .docsLocation(Location.of(docsLocation))
-                .logsLocation(Location.of(logsLocation))
-                .build()
-        );
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class YamlServiceData {
+        private String id;
+        private String tier;
+        private String owner;
+        private String channel;
+        private YamlRepository repository;
+        private String selfLocation;
+        private String metricsLocation;
+        private String docsLocation;
+        private String logsLocation;
+
+        public Service toService(List<YamlTier> tiers) {
+            YamlTier tierObject = tiers
+                .stream()
+                .filter(t -> t.name.equals(tier))
+                .findFirst()
+                .orElse(null);
+
+            return new Service(
+                ServiceId.of(id),
+                ServiceMetaData.builder()
+                    .tier(tierObject == null ? null : Tier.of(tierObject.name, tierObject.description))
+                    .owner(Team.of(TeamName.of(owner)))
+                    .channel(Channel.of(channel))
+                    .repository(repository == null ? null :
+                        CodeRepository.of(CodeRepositoryId.of(repository.name), Location.of(repository.location)))
+                    .selfLocation(Location.of(selfLocation))
+                    .metricsLocation(Location.of(metricsLocation))
+                    .docsLocation(Location.of(docsLocation))
+                    .logsLocation(Location.of(logsLocation))
+                    .build()
+            );
+        }
+
+    }
+
+    List<Service> toServices() {
+        return services.stream()
+            .map(s -> s.toService(tiers))
+            .collect(Collectors.toList());
     }
 }

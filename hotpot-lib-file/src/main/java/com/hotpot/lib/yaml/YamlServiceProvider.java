@@ -1,6 +1,5 @@
 package com.hotpot.lib.yaml;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.hotpot.domain.Precedence;
@@ -16,7 +15,6 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,10 +59,7 @@ public class YamlServiceProvider implements ServiceIdentityProvider, ServiceMeta
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
             File servicesLocation = resourceLoader.getResource(ResourceLoader.CLASSPATH_URL_PREFIX + servicesDefinitionFile).getFile();
-            return objectMapper.readValue(servicesLocation, new TypeReference<List<YamlService>>() {})
-                .stream()
-                .map(YamlService::toService)
-                .collect(Collectors.toList());
+            return objectMapper.readValue(servicesLocation, YamlService.class).toServices();
         } catch (IOException e) {
             String message = String.format("Having trouble reading from the services file: %s", servicesDefinitionFile);
             throw new ServiceMetaDataLoadError(message, e);

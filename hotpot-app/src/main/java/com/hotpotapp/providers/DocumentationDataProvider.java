@@ -28,7 +28,7 @@ public class DocumentationDataProvider implements ServiceDataProvider {
 
     @Override
     public <T> ServiceMetricValue<T> getForService(ServiceMetric<T> metric, ServiceId serviceId) {
-        if (serviceId.getValue().startsWith("s")) {
+        if (serviceId.getValue().startsWith("empty")) {
             return null;
         }
 

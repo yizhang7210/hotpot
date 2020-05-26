@@ -19,7 +19,7 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnProperty(value = "hotpot.metrics.provider-type", havingValue = "yaml")
     public ServiceMetricProvider serviceMetricProvider(
-        @Value("${hotpot.metrics.metrics-definition}") String metricsDefinitionLocation,
+        @Value("${hotpot.metrics.yaml.metrics-definition}") String metricsDefinitionLocation,
         DefaultResourceLoader defaultResourceLoader
     ) {
         LoggingUtils.logBeanName(log, YamlServiceMetricProvider.class);
@@ -29,7 +29,7 @@ public class AutoConfiguration {
     @Bean
     @ConditionalOnProperty(value = "hotpot.metrics.provider-type", havingValue = "yaml")
     public ServiceObjectiveProvider serviceObjectiveProvider(
-        @Value("${hotpot.metrics.objectives-definition}") String objectiveDefinitionLocation,
+        @Value("${hotpot.metrics.yaml.objectives-definition}") String objectiveDefinitionLocation,
         DefaultResourceLoader defaultResourceLoader,
         ServiceMetricProvider serviceMetricProvider
     ) {
@@ -37,5 +37,15 @@ public class AutoConfiguration {
         return new YamlServiceObjectiveProvider(objectiveDefinitionLocation, defaultResourceLoader, serviceMetricProvider);
     }
 
+    @Bean
+    @ConditionalOnProperty(value = "hotpot.metrics.provider-type", havingValue = "yaml")
+    public YamlServiceProvider serviceProvider(
+        @Value("${hotpot.metrics.yaml.services-definition}") String serviceDefinitionLocation,
+        DefaultResourceLoader defaultResourceLoader,
+        @Value("${hotpot.metrics.yaml.metadata-precedence}") String precedence
+    ) {
+        LoggingUtils.logBeanName(log, YamlServiceProvider.class);
+        return new YamlServiceProvider(serviceDefinitionLocation, defaultResourceLoader, precedence);
+    }
 
 }

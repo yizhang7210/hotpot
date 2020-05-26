@@ -1,7 +1,6 @@
 package com.hotpotapp.domain;
 
 import com.hotpot.domain.MetricId;
-import com.hotpot.domain.Tier;
 import lombok.Getter;
 
 @Getter

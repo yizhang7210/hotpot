@@ -1,7 +1,7 @@
 <template>
     <div class="objectives-list">
         <div class="objectives-header">
-            <p class="objectives-title">Service Objectives</p>
+            <p class="objectives-title">Objectives</p>
             <b-form-input
                     v-model="filter"
                     type="search"
@@ -51,7 +51,7 @@
     },
     computed: {
       fields() {
-        return Object.keys(this.$store.state.objectives[0]).map(k => ({key: k, sortable: true}))
+        return ['id', 'description']
       }
     },
     methods: {

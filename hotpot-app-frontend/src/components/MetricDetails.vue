@@ -1,11 +1,11 @@
 <template>
     <div class="metric-details">
-        <p class="metric-title"> Service Metric: {{ this.$route.params.mid }}</p>
+        <p class="metric-title"> Metric: {{ $route.params.mid }}</p>
 
         <b-tabs lazy>
             <b-tab title="Basic Information" active>
                 <div class="metric-details-list">
-                    <dl class="metric-detail" v-for="detail in this.details" :key="detail.key">
+                    <dl class="metric-detail" v-for="detail in details" :key="detail.key">
                         <dt>
                             {{detail.display}}
                         </dt>
@@ -20,7 +20,7 @@
 
             <b-tab title="Service Metric Values">
                 <div class="metric-details-list">
-                    <dl class="metric-detail" v-for="result in this.serviceResults" :key="result.serviceId">
+                    <dl class="metric-detail" v-for="result in serviceResults" :key="result.serviceId">
                         <dt>
                             {{result.serviceId}}
                         </dt>
@@ -49,11 +49,11 @@
       }
     },
     mounted() {
-      this.populateService();
+      this.populateMetrics();
     },
     computed: {},
     methods: {
-      populateService: async function () {
+      populateMetrics: async function () {
         const response = await http.get(`v1/metrics/${this.$route.params.mid}`);
         const metric = response.data.metric;
         this.serviceResults = response.data.results;

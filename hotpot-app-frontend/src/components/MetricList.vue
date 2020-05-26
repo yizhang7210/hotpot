@@ -1,7 +1,7 @@
 <template>
     <div class="metrics-list">
         <div class="metrics-header">
-            <p class="metrics-title">Service Metrics</p>
+            <p class="metrics-title">Metrics</p>
             <b-form-input
                     v-model="filter"
                     type="search"

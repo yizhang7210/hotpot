@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<SimpleServiceMetricDto, MetricWithResults<?>> {
+public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<SimpleServiceMetricDto, MetricWithResults> {
 
     private final ServiceDataSourcePicker serviceDataSourcePicker;
     private final ServiceIdentityProvider serviceIdentityProvider;
@@ -34,7 +34,7 @@ public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<
     }
 
     @Override
-    public MetricWithResults<?> toDetailedDto(ServiceMetric<?> metric) {
+    public MetricWithResults toDetailedDto(ServiceMetric<?> metric) {
 
         ServiceDataProvider dataProvider = serviceDataSourcePicker.getDataProvider(metric.getId());
 
@@ -47,7 +47,7 @@ public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<
                 metricValueTransformer::toDto)
             );
 
-        return new MetricWithResults<>(metric, results);
+        return new MetricWithResults(toDto(metric), results);
 
     }
 }

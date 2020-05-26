@@ -31,7 +31,7 @@ public class YamlCriterionTest {
         ServiceMetric<Integer> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Integer.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", operator + "/1", null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", operator + "/1", null);
         Criterion<Integer> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
@@ -48,7 +48,7 @@ public class YamlCriterionTest {
         ServiceMetric<Double> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Double.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", operator + "/1.2", null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", operator + "/1.2", null);
         Criterion<Double> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
@@ -64,7 +64,7 @@ public class YamlCriterionTest {
         ServiceMetric<Boolean> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Boolean.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", "eq/" + threshold, null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", "eq/" + threshold, null);
         Criterion<Boolean> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
@@ -80,7 +80,7 @@ public class YamlCriterionTest {
         ServiceMetric<String> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, String.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", "eq/" + threshold, null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", "eq/" + threshold, null);
         Criterion<String> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
@@ -97,7 +97,7 @@ public class YamlCriterionTest {
         ServiceMetric<String> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, String.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", operator + "/3", "length");
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", operator + "/3", "length");
         Criterion<String> criterion = yamlCriterion.toCriterion(metric);
 
         // Then
@@ -112,7 +112,7 @@ public class YamlCriterionTest {
         ServiceMetric<Double> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Double.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", "eq/3.0", null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", "eq/3.0", null);
 
         // Then
         assertThrows(InvalidObjectiveError.class, () -> yamlCriterion.toCriterion(metric));
@@ -125,7 +125,7 @@ public class YamlCriterionTest {
         ServiceMetric<Boolean> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, Boolean.class);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id", operator + "/true", null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", operator + "/true", null);
 
         // Then
         assertThrows(InvalidObjectiveError.class, () -> yamlCriterion.toCriterion(metric));
@@ -138,7 +138,7 @@ public class YamlCriterionTest {
         ServiceMetric<?> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, clazz);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id",  "eq/anything", "notnull");
+        YamlCriterion yamlCriterion = new YamlCriterion("id","", "eq/anything", "notnull");
 
         // Then
         assertThrows(InvalidObjectiveError.class, () -> yamlCriterion.toCriterion(metric));
@@ -151,7 +151,7 @@ public class YamlCriterionTest {
         ServiceMetric<?> metric = new ServiceMetric<>(MetricId.of("id"), "", Duration.ZERO, clazz);
 
         // When
-        YamlCriterion yamlCriterion = new YamlCriterion("id",  "eq/3", null);
+        YamlCriterion yamlCriterion = new YamlCriterion("id", "", "eq/3", null);
 
         // Then
         assertThrows(InvalidObjectiveError.class, () -> yamlCriterion.toCriterion(metric));

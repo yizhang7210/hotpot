@@ -1,6 +1,7 @@
 package com.hotpotapp.application.transformers;
 
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
+import com.hotpot.domain.Criterion;
 import com.hotpot.domain.ServiceConstructor;
 import com.hotpot.domain.ServiceObjective;
 import com.hotpot.domain.ServiceObjectiveEvaluator;
@@ -26,7 +27,16 @@ public class SimpleServiceObjectiveTransformer implements ServiceObjectiveTransf
 
     @Override
     public SimpleServiceObjectiveDto toDto(ServiceObjective objective) {
-        return new SimpleServiceObjectiveDto(objective.getId().getValue(), objective.getDescription());
+        return new SimpleServiceObjectiveDto(
+            objective.getId().getValue(),
+            objective.getDescription(),
+            objective.getCriteria()
+                .stream()
+                .collect(Collectors.toMap(
+                    c -> c.getMetric().getId().getValue(),
+                    Criterion::getDescription
+                ))
+        );
     }
 
     @Override
@@ -38,6 +48,6 @@ public class SimpleServiceObjectiveTransformer implements ServiceObjectiveTransf
             .flatMap(Optional::stream)
             .collect(Collectors.toMap(sor -> sor.getServiceId().getValue(), resultTransformer::toDto));
 
-        return new ObjectiveWithResults(objective, results);
+        return new ObjectiveWithResults(toDto(objective), results);
     }
 }

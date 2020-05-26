@@ -21,6 +21,7 @@ import java.util.function.Predicate;
 @NoArgsConstructor
 public class YamlCriterion {
     private String metricId;
+    private String description;
     private String condition;
     private String transform;
 
@@ -36,6 +37,7 @@ public class YamlCriterion {
         Predicate<ServiceMetricValue<T>> nonNull = Objects::nonNull;
         return new Criterion<>(
             metric,
+            description,
             nonNull.and(toCondition(metric))
         );
     }

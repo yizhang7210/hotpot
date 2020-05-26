@@ -4,6 +4,7 @@ import com.hotpot.application.transformers.ServiceMetricTransformer;
 import com.hotpot.application.transformers.ServiceMetricValueTransformer;
 import com.hotpot.application.usecases.ServiceMetricUseCase;
 import com.hotpot.domain.MetricId;
+import com.hotpot.domain.ServiceId;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,11 @@ public class ServiceMetricController<U, V, W> {
         );
     }
 
-
+    @GetMapping("${hotpot.web-api.base-url}/metrics/values/{serviceId}")
+    public ResponseEntity<Map<String, W>> getServiceMetricValuesByService(@PathVariable("serviceId") String serviceId) {
+        return ResponseEntity.ok(
+            serviceMetricUseCase.getServiceMetricValuesByService(ServiceId.of(serviceId), serviceMetricValueTransformer::toDto)
+        );
+    }
 
 }

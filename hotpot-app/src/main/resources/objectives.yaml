@@ -9,10 +9,11 @@
     - field: id
       values: [first-service]
   criteria:
-    - metricId: 'doc-location'
+    - metricId: doc-location
+      description: Specified documentation link is present
       transform: length
       condition: gt/0
-- id: 'release-frequency'
+- id: 'release-cadence'
   description: |
     Service should maintain a reasonable release frequency while
     keeping the rollback rate low
@@ -20,7 +21,9 @@
     - field: id
       values: [empty-service]
   criteria:
-    - metricId: 'average-releases'
+    - metricId: average-releases
+      description: There are more than 1 release on average over the past 30 days
       condition: gt/1
-    - metricId: 'percentage-rollback'
+    - metricId: percentage-rollback
+      description: There are less than 20% releases on average that are rollbacks
       condition: lt/0.2

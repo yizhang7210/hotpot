@@ -57,4 +57,15 @@ public class ServiceMetricUseCase {
             ));
     }
 
+    public <T> Map<String, T> getServiceMetricValuesByService(ServiceId serviceId, Function<ServiceMetricValue<?>, T> transformer) {
+        return serviceMetricProvider.getAllMetrics()
+            .stream()
+            .map(metric -> serviceDataSourcePicker.getDataProvider(metric.getId()).getForService(metric, serviceId))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toMap(
+                metricValue -> metricValue.getMetric().getId().getValue(),
+                transformer
+            ));
+    }
+
 }

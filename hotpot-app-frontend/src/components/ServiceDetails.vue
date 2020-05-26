@@ -1,12 +1,12 @@
 <template>
     <div class="service-details">
-        <p class="service-title"> Service: {{ this.$route.params.sid }} </p>
+        <p class="service-title"> Service: {{ $route.params.sid }} </p>
 
         <div>
             <b-tabs lazy>
                 <b-tab title="Basic Information" active>
                     <div class="service-details-list">
-                        <dl class="service-detail" v-for="detail in this.details" :key="detail.key">
+                        <dl class="service-detail" v-for="detail in details" :key="detail.key">
                             <dt>
                                 {{detail.display}}
                             </dt>
@@ -20,7 +20,7 @@
                 </b-tab>
                 <b-tab title="Service Objective Results">
                     <div class="service-details-list">
-                        <dl class="service-detail" v-for="result in this.objectiveResults" :key="result.objectiveId">
+                        <dl class="service-detail" v-for="result in objectiveResults" :key="result.objectiveId">
                             <dt>
                                 <router-link :to="'/objectives/' + result.objectiveId">
                                     {{result.objectiveId}}
@@ -29,6 +29,22 @@
                             <dd>
                                 <span v-bind:class="{warning: !result.status}">
                                     {{ result.status || 'Not Available'}}
+                                </span>
+                            </dd>
+                        </dl>
+                    </div>
+                </b-tab>
+                <b-tab title="Service Metric Values">
+                    <div class="service-details-list">
+                        <dl class="service-detail" v-for="result in metricResults" :key="result.metricId">
+                            <dt>
+                                <router-link :to="'/metrics/' + result.metricId">
+                                    {{result.metricId}}
+                                </router-link>
+                            </dt>
+                            <dd>
+                                <span v-bind:class="{warning: !result.value}">
+                                    {{ result.value || 'Not Available'}}
                                 </span>
                             </dd>
                         </dl>
@@ -49,11 +65,13 @@
     data() {
       return {
         details: null,
-        objectiveResults: null
+        objectiveResults: null,
+        metricResults:null
       }
     },
     mounted() {
       this.populateService();
+      this.populateMetrics();
     },
     computed: {},
     methods: {
@@ -110,6 +128,16 @@
           }
         ];
 
+      },
+      populateMetrics: async function () {
+        const response = await http.get(`v1/metrics/values/${this.$route.params.sid}`);
+        this.metricResults = response.data;
+
+        Object.keys(this.metricResults).forEach((key) => {
+          if (!Number.isNaN(Number.parseFloat(this.metricResults[key].value))) {
+            this.metricResults[key].value = Number.parseFloat(this.metricResults[key].value).toFixed(2);
+          }
+        });
       }
     },
   }

@@ -1,18 +1,21 @@
 <template>
     <div class="objective-details">
-        <p class="objective-title">Service Objective: {{ this.$route.params.oid }}</p>
+        <p class="objective-title">Objective: {{ $route.params.oid }}</p>
 
         <b-tabs lazy>
             <b-tab title="Basic Information" active>
                 <div class="objective-details-list">
-                    <dl class="objective-detail" v-for="detail in this.details" :key="detail.key">
-                        <dt>
-                            {{detail.display}}
-                        </dt>
+                    <dl class="objective-detail">
+                        <dt> Description</dt>
+                        <dd> {{ objective.description }}</dd>
+                        <dt> Criteria</dt>
                         <dd>
-                            <span v-bind:class="{warning: !detail.value}">
-                                {{ detail.value || 'Not Available'}}
-                            </span>
+                            <ul>
+                                <li v-for="metric in Object.keys(objective.criteria)" :key="metric">
+                                    <router-link :to="'/metrics/' + metric"> {{metric}} </router-link>
+                                    : {{ objective.criteria[metric] }}
+                                </li>
+                            </ul>
                         </dd>
                     </dl>
                 </div>
@@ -20,7 +23,7 @@
 
             <b-tab title="Service Objective Results">
                 <div class="objective-details-list">
-                    <dl class="objective-detail" v-for="result in this.serviceResults" :key="result.serviceId">
+                    <dl class="objective-results" v-for="result in serviceResults" :key="result.serviceId">
                         <dt>
                             {{result.serviceId}}
                         </dt>
@@ -43,28 +46,18 @@
     name: 'ObjectiveDetails',
     data() {
       return {
-        details: null,
+        objective: {description: '', criteria: {}},
         serviceResults: null
       }
     },
     mounted() {
       this.populateService();
     },
-    computed: {},
     methods: {
       populateService: async function () {
         const response = await http.get(`v1/objectives/${this.$route.params.oid}`);
-        const objective = response.data.objective;
+        this.objective = response.data.objective;
         this.serviceResults = response.data.results;
-
-        this.details = [
-          {
-            key: "description",
-            display: "Description",
-            value: objective.description
-          }
-        ];
-
       }
     },
   }
@@ -81,6 +74,10 @@
     }
 
     .objective-detail {
+        padding: 0 $small-padding;
+    }
+
+    .objective-results {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
         padding: 0 $small-padding;

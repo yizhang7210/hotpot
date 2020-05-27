@@ -50,5 +50,16 @@ services:
     metricsLocation: 'https://metrics-provider/second-service'
     docsLocation: 'https://second-service/docs'
     logsLocation: 'https://logs-provider/second-service'
+  - id: 'short'
+    tier: '2'
+    owner: 'Short Team'
+    channel: '#short-team'
+    repository:
+      name: 'short-service'
+      location: 'https://myrepositories.com/short-service'
+    selfLocation: 'https://short-service'
+    metricsLocation: 'https://metrics-provider/short-service'
+    docsLocation: 'https://short-service/docs'
+    logsLocation: 'https://logs-provider/short-service'
   - id: 'empty-service'
 

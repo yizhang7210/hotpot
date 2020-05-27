@@ -23,11 +23,11 @@ public class ReleaseDataProvider implements ServiceDataProvider {
     );
 
     public Double getAverageReleases(ServiceId serviceId, Instant from, Instant to) {
-        return Math.random() * 100;
+        return serviceId.getValue().length() / 2.0;
     }
 
     public Double getRollbackPercentage(ServiceId serviceId, Instant from, Instant to) {
-        return Math.random();
+        return serviceId.getValue().length() / 50.0;
     }
 
     @Override

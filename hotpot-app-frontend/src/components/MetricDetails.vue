@@ -3,7 +3,7 @@
         <p class="metric-title"> Metric: {{ $route.params.mid }}</p>
 
         <b-tabs lazy v-model="tabIndex">
-            <b-tab title="Basic Information" @click="onTabClick(0)">
+            <b-tab title="Basic Information" @click="onTabClick(0)" class="metric-tab-container">
                 <div class="metric-details-list">
                     <dl class="metric-detail" v-for="detail in details" :key="detail.key">
                         <dt>
@@ -18,7 +18,7 @@
                 </div>
             </b-tab>
 
-            <b-tab title="Service Metric Values" @click="onTabClick(1)">
+            <b-tab title="Service Metric Values" @click="onTabClick(1)" class="metric-tab-container">
                 <div class="metric-details-list">
                     <dl class="metric-detail" v-for="result in serviceResults" :key="result.serviceId">
                         <dt>
@@ -99,7 +99,6 @@
     .metric-detail {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
-        padding: 0 $small-padding;
     }
 
     .metric-details-list {
@@ -112,6 +111,10 @@
 
     .warning {
         background-color: $warning;
+    }
+
+    .metric-tab-container {
+        padding: 0 $small-padding;
     }
 
 </style>

@@ -4,7 +4,7 @@
 
         <div>
             <b-tabs lazy v-model="tabIndex">
-                <b-tab title="Basic Information" @click="onTabClick(0)">
+                <b-tab title="Basic Information" @click="onTabClick(0)" class="service-tab-container">
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="detail in details" :key="detail.key">
                             <dt>
@@ -18,7 +18,11 @@
                         </dl>
                     </div>
                 </b-tab>
-                <b-tab title="Service Objective Results" @click="onTabClick(1)">
+                <b-tab title="Service Objective Results" @click="onTabClick(1)" class="service-tab-container">
+                    <b-progress :max="total" show-value class="service-progress-bar">
+                        <b-progress-bar :value="successes" variant="success"/>
+                        <b-progress-bar :value="failures" variant="warning"/>
+                    </b-progress>
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in objectiveResults" :key="result.objectiveId">
                             <dt>
@@ -34,7 +38,7 @@
                         </dl>
                     </div>
                 </b-tab>
-                <b-tab title="Service Metric Values" @click="onTabClick(2)">
+                <b-tab title="Service Metric Values" @click="onTabClick(2)" class="service-tab-container">
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in metricResults" :key="result.metricId">
                             <dt>
@@ -67,7 +71,10 @@
         details: null,
         objectiveResults: null,
         metricResults:null,
-        tabIndex: this.$route.query.tab || 0
+        tabIndex: this.$route.query.tab || 0,
+        total: 0,
+        successes: 0,
+        failures: 0
       }
     },
     mounted() {
@@ -79,6 +86,10 @@
         const response = await http.get(`v1/services/${this.$route.params.sid}`);
         const metaData = response.data.service.metaData;
         this.objectiveResults = response.data.results;
+
+        this.total = Object.keys(this.objectiveResults).length;
+        this.successes = Object.entries(this.objectiveResults).filter((r) => (r[1].status === "Pass")).length;
+        this.failures = this.total - this.successes;
 
         this.details = [
           {
@@ -159,6 +170,9 @@
     .service-detail {
         width: 33%; /* to ensure 3 columns */
         max-height: $dl-height;
+    }
+
+    .service-tab-container {
         padding: 0 $small-padding;
     }
 
@@ -173,5 +187,10 @@
     .warning {
         background-color: $warning;
     }
+
+    .service-progress-bar {
+        margin: $big-margin 0;
+    }
+
 
 </style>

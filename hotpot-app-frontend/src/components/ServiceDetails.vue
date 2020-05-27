@@ -26,7 +26,7 @@
                     <div class="service-details-list">
                         <dl class="service-detail" v-for="result in objectiveResults" :key="result.objectiveId">
                             <dt>
-                                <router-link :to="'/objectives/' + result.objectiveId">
+                                <router-link :to="`/services/${$route.params.sid}/objectives/${result.objectiveId}`">
                                     {{result.objectiveId}}
                                 </router-link>
                             </dt>

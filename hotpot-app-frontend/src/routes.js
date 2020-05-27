@@ -4,6 +4,7 @@ import MetricList from './components/MetricList.vue'
 import ObjectiveDetails from "./components/ObjectiveDetails";
 import ObjectiveList from './components/ObjectiveList.vue'
 import ServiceDetails from './components/ServiceDetails.vue'
+import ServiceObjectiveDetails from './components/ServiceObjectiveDetails.vue'
 
 export default [
   {
@@ -33,5 +34,9 @@ export default [
   {
     path: '/metrics/:mid',
     component: MetricDetails,
-  }
+  },
+  {
+    path: '/services/:sid/objectives/:oid',
+    component: ServiceObjectiveDetails,
+  },
 ];

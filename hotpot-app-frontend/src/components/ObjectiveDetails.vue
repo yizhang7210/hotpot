@@ -29,7 +29,9 @@
                 <div class="objective-details-list">
                     <dl class="objective-results" v-for="result in serviceResults" :key="result.serviceId">
                         <dt>
-                            {{result.serviceId}}
+                            <router-link :to="`/services/${result.serviceId}/objectives/${$route.params.oid}`">
+                                {{result.serviceId}}
+                            </router-link>
                         </dt>
                         <dd>
                             <span v-bind:class="{warning: !result.status}">

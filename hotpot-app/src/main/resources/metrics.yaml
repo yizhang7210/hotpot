@@ -1,9 +1,7 @@
 - id: 'doc-location'
   type: 'String'
   timeSpan: 'PT0S'
-  description: |
-    Location of the service's `documentation`
-    and more
+  description: "url of the service's web API documentation"
 - id: 'average-releases'
   type: 'Double'
   timeSpan: 'PT720H'

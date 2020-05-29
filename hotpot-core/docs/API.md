@@ -66,9 +66,10 @@ All endpoints are located under the `hotpot.web-api.base-url` sub-path.
 #### With `hotpot.metrics.enabled=true`
 - GET `/objectives`: Return a list of defined service objectives
 - GET `/objectives/{objectiveId}`: Return the details of a single service objective with given `objectiveId`
-- GET `/objectives/{objectiveId}/results`: Return the given `objectiveId`'s results on all applicable services
+- GET `/objectivesResults?q=objectiveId=oId,serviceId=sId`: Return the service objective results filtered by
+`objectiveId` and/or `serviceId`
 - GET `/metrics`: Return a list of defined service metrics
 - GET `/metrics/{metricId}`: Return the details of a single service metric with given `metricId`
-- GET `/metrics/{metricId}/values`: Return the given `metricId`'s values on all services
-- GET `/metrics/values/{serviceId}`: Return the given `serviceId`'s metric values on all metrics
+- GET `/metricValues?q=metricId=mId,serviceId=sId`: Return the service metric values filtered by `metricId` and/or
+`serviceId`
 

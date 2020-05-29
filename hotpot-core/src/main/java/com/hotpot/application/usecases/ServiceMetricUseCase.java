@@ -5,17 +5,16 @@ import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceId;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.ServiceMetricValue;
-import com.hotpot.domain.providers.ServiceDataProvider;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
 import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceMetricProvider.ServiceMetricNotFoundError;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -40,32 +39,31 @@ public class ServiceMetricUseCase {
         );
     }
 
-    public <T> Map<String, T> getServiceMetricValuesById(MetricId metricId, Function<ServiceMetricValue<?>, T> transformer) {
+    public <T> List<T> getServiceMetricValues(
+        MetricId metricId, ServiceId serviceId, Function<ServiceMetricValue<?>, T> transformer
+    ) {
+        Predicate<ServiceMetric<?>> metricFilter = metricId == null ? m -> true : m -> m.getId().equals(metricId);
+        Predicate<ServiceId> serviceFilter = serviceId == null ? s -> true : s -> s.equals(serviceId);
 
-        ServiceDataProvider dataProvider = serviceDataSourcePicker.getDataProvider(metricId);
-        ServiceMetric<?> metric = serviceMetricProvider
-            .getMetricById(metricId).
-            orElseThrow(() -> new ServiceMetricNotFoundError(metricId));
+        List<ServiceMetric<?>> metrics = serviceMetricProvider.getAllMetrics()
+            .stream().filter(metricFilter).collect(Collectors.toList());
 
-        return serviceIdentityProvider.getServiceIds()
-            .stream()
-            .map(sId -> dataProvider.getForService(metric, sId))
-            .filter(Objects::nonNull)
-            .collect(Collectors.toMap(
-                metricValue -> metricValue.getServiceId().getValue(),
-                transformer
-            ));
-    }
+        List<ServiceId> serviceIds = serviceIdentityProvider.getServiceIds()
+            .stream().filter(serviceFilter).collect(Collectors.toList());
 
-    public <T> Map<String, T> getServiceMetricValuesByService(ServiceId serviceId, Function<ServiceMetricValue<?>, T> transformer) {
-        return serviceMetricProvider.getAllMetrics()
-            .stream()
-            .map(metric -> serviceDataSourcePicker.getDataProvider(metric.getId()).getForService(metric, serviceId))
-            .filter(Objects::nonNull)
-            .collect(Collectors.toMap(
-                metricValue -> metricValue.getMetric().getId().getValue(),
-                transformer
-            ));
+        List<T> values = new ArrayList<>();
+
+        for (ServiceMetric<?> metric : metrics) {
+            for (ServiceId sId : serviceIds) {
+                ServiceMetricValue<?> value = serviceDataSourcePicker.getDataProvider(metric.getId()).getForService(metric, sId);
+                if (value != null) {
+                    values.add(transformer.apply(value));
+                }
+            }
+        }
+
+        return values;
+
     }
 
 }

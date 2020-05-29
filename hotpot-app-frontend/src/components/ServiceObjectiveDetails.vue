@@ -41,7 +41,7 @@
         objective: null,
         metricResults: null,
         fields: [
-          {key: "name", label: "Metric"},
+          {key: "metric", label: "Metric"},
           {key: "description", label: "Description"},
           {key: "value", label: "Current Value"},
           {key: "measuredAt", label: "Measured At"}
@@ -62,11 +62,11 @@
         }
 
         const criteria = Object.entries(this.objective.criteria)
-          .map((entry) => ({name: entry[0], description: entry[1]}));
+          .map((entry) => ({metric: entry[0], description: entry[1]}));
 
         criteria.forEach(criterion => {
-          criterion['value'] = this.format(this.metricResults[criterion['name']].value);
-          criterion['measuredAt'] = this.metricResults[criterion['name']].measuredAt;
+          criterion['value'] = this.format(this.metricResults[criterion['metric']].value);
+          criterion['measuredAt'] = this.metricResults[criterion['metric']].measuredAt;
         });
         return criteria;
       }
@@ -77,8 +77,11 @@
         this.objective = response.data.objective;
       },
       populateMetrics: async function () {
-        const response = await http.get(`v1/metrics/values/${this.$route.params.sid}`);
-        this.metricResults = response.data;
+        const response = await http.get(`v1/metricValues?q=serviceId=${this.$route.params.sid}`);
+        this.metricResults = {};
+        response.data.forEach((metricValue) => {
+          this.metricResults[metricValue['metricId']] = metricValue;
+        });
       },
       format: function (value) {
         if (!Number.isNaN(Number.parseFloat(value))) {

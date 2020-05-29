@@ -4,11 +4,14 @@ import com.hotpot.application.transformers.ServiceObjectiveResultTransformer;
 import com.hotpot.application.transformers.ServiceObjectiveTransformer;
 import com.hotpot.application.usecases.ServiceObjectiveUseCase;
 import com.hotpot.domain.ObjectiveId;
+import com.hotpot.domain.ServiceId;
+import com.hotpot.utils.QueryUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -33,10 +36,14 @@ public class ServiceObjectiveController<U, V, W> {
         );
     }
 
-    @GetMapping("${hotpot.web-api.base-url}/objectives/{objectiveId}/results")
-    public ResponseEntity<Map<String, W>> getServiceObjectiveResultsById(@PathVariable("objectiveId") String objectiveId) {
+    @GetMapping("${hotpot.web-api.base-url}/objectiveResults")
+    public ResponseEntity<List<W>> getServiceObjectiveResults(@RequestParam(required = false) String q) {
+        Map<String, String> filters = q == null ? Map.of() : QueryUtils.parseQuery(q);
+        ObjectiveId objectiveId = filters.containsKey("objectiveId") ? ObjectiveId.of(filters.get("objectiveId")) : null;
+        ServiceId serviceId = filters.containsKey("serviceId") ? ServiceId.of(filters.get("serviceId")) : null;
+
         return ResponseEntity.ok(
-            serviceObjectiveUseCase.getObjectiveResultsById(ObjectiveId.of(objectiveId), serviceObjectiveResultTransformer::toDto)
+            serviceObjectiveUseCase.getServiceObjectiveResults(objectiveId, serviceId, serviceObjectiveResultTransformer::toDto)
         );
     }
 

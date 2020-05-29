@@ -141,7 +141,7 @@
 
       },
       populateMetrics: async function () {
-        const response = await http.get(`v1/metrics/values/${this.$route.params.sid}`);
+        const response = await http.get(`v1/metricValues?q=serviceId=${this.$route.params.sid}`);
         this.metricResults = response.data;
 
         Object.keys(this.metricResults).forEach((key) => {

@@ -1,29 +1,14 @@
-# frontend
+# hotpot-app-frontend
 
-## Project setup
-```
-yarn install
-```
+This is the frontend of `hotpot-app`, a demo app of the [hotpot](https://github.com/yizhang7210/hotpot) framework.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+It's a relatively small `Vue.js` based single page application.
 
-### Compiles and minifies for production
+### Project setup
+Make sure you have [yarn](https://classic.yarnpkg.com/en/docs/getting-started). 
 ```
-yarn run build
+yarn install  -- installs dependencies
+yarn run serve -- start a dev server at localhost:3000
+yarn run test -- runs all the tests
+yarn run lint -- lints the code
 ```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

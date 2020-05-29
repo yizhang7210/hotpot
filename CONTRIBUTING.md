@@ -7,11 +7,11 @@ documentation writing, spreading the word, feature requests, monetary sponsoring
 ## Architecture
 This repository hosts multiple different projects. They are:
 - `hotpot-core`: The core framework of hotpot that everything else is based on
-- `hotpot-lib-file`: A Hotpot library that supports `yaml` based service, metric, and objective definitions
+- `hotpot-lib-file`: A Hotpot library that supports file (`yaml`) based service, metric, and objective definitions
 - `hotpot-app`: An example service catalogue app using `hotpot-core`. It demonstrates `hotpot-core`'s capabilities
 - `hotpot-app-frontend`: The corresponding single page app frontend. Displays the information on a web site.
 
-## Set up locally
+### Project setup
 1. Make sure you have java 12 or above
 1. `./gradlew test` from the project root will run the tests for all the java based projects
 1. `./gradlew bootRun` will start the demo app `hotpot-app`

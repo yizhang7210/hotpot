@@ -59,7 +59,7 @@ metrics for the service `serviceId`.
 
 ## Libraries
 Popular libraries that make running a Hotpot app even easier include:
-- [hotpot-lib-file](./hotpot-lib-file): Support `yaml` file based service, objective and metric definitions
+- [hotpot-lib-file](./hotpot-lib-file): Support file (`yaml`) based service, metric, and objective definitions
 
 ## More Information
 - [Full documentation](./hotpot-core/docs/API.md)

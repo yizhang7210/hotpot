@@ -5,7 +5,7 @@ import com.hotpot.domain.ServiceDataSourcePicker;
 import com.hotpot.domain.ServiceMetric;
 import com.hotpot.domain.providers.ServiceDataProvider;
 import com.hotpot.domain.providers.ServiceIdentityProvider;
-import com.hotpotapp.application.dtos.MetricWithResults;
+import com.hotpotapp.application.dtos.MetricWithValues;
 import com.hotpotapp.application.dtos.SimpleServiceMetricDto;
 import com.hotpotapp.application.dtos.SimpleServiceMetricValueDto;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<SimpleServiceMetricDto, MetricWithResults> {
+public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<SimpleServiceMetricDto, MetricWithValues> {
 
     private final ServiceDataSourcePicker serviceDataSourcePicker;
     private final ServiceIdentityProvider serviceIdentityProvider;
@@ -34,11 +34,11 @@ public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<
     }
 
     @Override
-    public MetricWithResults toDetailedDto(ServiceMetric<?> metric) {
+    public MetricWithValues toDetailedDto(ServiceMetric<?> metric) {
 
         ServiceDataProvider dataProvider = serviceDataSourcePicker.getDataProvider(metric.getId());
 
-        Map<String, SimpleServiceMetricValueDto> results = serviceIdentityProvider.getServiceIds()
+        Map<String, SimpleServiceMetricValueDto> values = serviceIdentityProvider.getServiceIds()
             .stream()
             .map(sId -> dataProvider.getForService(metric, sId))
             .filter(Objects::nonNull)
@@ -47,7 +47,7 @@ public class SimpleServiceMetricTransformer implements ServiceMetricTransformer<
                 metricValueTransformer::toDto)
             );
 
-        return new MetricWithResults(toDto(metric), results);
+        return new MetricWithValues(toDto(metric), values);
 
     }
 }

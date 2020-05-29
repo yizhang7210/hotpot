@@ -6,7 +6,7 @@ import lombok.Value;
 import java.util.Map;
 
 @Value
-public class MetricWithResults {
+public class MetricWithValues {
     private final SimpleServiceMetricDto metric;
     private final Map<String, SimpleServiceMetricValueDto> results;
 }

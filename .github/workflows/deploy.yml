@@ -1,0 +1,46 @@
+name: Deploy demo apps
+
+#on:
+#  release:
+#    types: [published]
+
+on: push
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  RUN_REGION: us-east1
+  SERVICE_NAME: hotpotapp
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: build jar
+        run: chmod +x gradlew && ./gradlew build --info
+      - name: build image
+        run: |-
+          cd hotpot-app && gcloud builds submit \
+            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+      - name: deploy
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --region "$RUN_REGION" \
+            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+            --platform "managed" \
+            --allow-unauthenticated

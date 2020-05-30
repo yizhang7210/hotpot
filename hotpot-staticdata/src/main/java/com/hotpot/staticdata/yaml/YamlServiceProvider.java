@@ -1,4 +1,4 @@
-package com.hotpot.lib.yaml;
+package com.hotpot.staticdata.yaml;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;

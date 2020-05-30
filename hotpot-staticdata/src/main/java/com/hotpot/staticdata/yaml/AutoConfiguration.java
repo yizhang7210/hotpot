@@ -1,4 +1,4 @@
-package com.hotpot.lib.yaml;
+package com.hotpot.staticdata.yaml;
 
 import com.hotpot.domain.providers.ServiceMetricProvider;
 import com.hotpot.domain.providers.ServiceObjectiveProvider;
@@ -14,13 +14,13 @@ import org.springframework.core.io.DefaultResourceLoader;
 @Slf4j
 @Configuration
 @AllArgsConstructor
-@ConditionalOnProperty(value = "hotpot.static-data.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "hotpot.staticdata.enabled", havingValue = "true")
 public class AutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.static-data.type", havingValue = "yaml")
+    @ConditionalOnProperty(value = "hotpot.staticdata.type", havingValue = "yaml")
     public ServiceMetricProvider serviceMetricProvider(
-        @Value("${hotpot.static-data.metrics-location}") String metricsDefinitionLocation,
+        @Value("${hotpot.staticdata.metrics-location}") String metricsDefinitionLocation,
         DefaultResourceLoader defaultResourceLoader
     ) {
         LoggingUtils.logBeanName(log, YamlServiceMetricProvider.class);
@@ -28,9 +28,9 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.static-data.type", havingValue = "yaml")
+    @ConditionalOnProperty(value = "hotpot.staticdata.type", havingValue = "yaml")
     public ServiceObjectiveProvider serviceObjectiveProvider(
-        @Value("${hotpot.static-data.objectives-location}") String objectiveDefinitionLocation,
+        @Value("${hotpot.staticdata.objectives-location}") String objectiveDefinitionLocation,
         DefaultResourceLoader defaultResourceLoader,
         ServiceMetricProvider serviceMetricProvider
     ) {
@@ -39,11 +39,11 @@ public class AutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "hotpot.static-data.type", havingValue = "yaml")
+    @ConditionalOnProperty(value = "hotpot.staticdata.type", havingValue = "yaml")
     public YamlServiceProvider serviceProvider(
-        @Value("${hotpot.static-data.services-location}") String serviceDefinitionLocation,
+        @Value("${hotpot.staticdata.services-location}") String serviceDefinitionLocation,
         DefaultResourceLoader defaultResourceLoader,
-        @Value("${hotpot.static-data.metadata-precedence}") String precedence
+        @Value("${hotpot.staticdata.metadata-precedence}") String precedence
     ) {
         LoggingUtils.logBeanName(log, YamlServiceProvider.class);
         return new YamlServiceProvider(serviceDefinitionLocation, defaultResourceLoader, precedence);

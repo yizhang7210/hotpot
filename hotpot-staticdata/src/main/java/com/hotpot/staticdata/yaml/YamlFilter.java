@@ -1,4 +1,4 @@
-package com.hotpot.lib.yaml;
+package com.hotpot.staticdata.yaml;
 
 import com.hotpot.domain.Service;
 import com.hotpot.domain.providers.ServiceObjectiveProvider.InvalidObjectiveError;

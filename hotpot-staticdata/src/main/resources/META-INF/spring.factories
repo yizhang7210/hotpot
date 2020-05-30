@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com/hotpot/lib/yaml/AutoConfiguration
+  com/hotpot/staticdata/yaml/AutoConfiguration

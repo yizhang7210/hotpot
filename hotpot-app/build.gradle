@@ -22,11 +22,11 @@ dependencies {
 
     // Use the source version from the project, uncomment this section
     implementation project(":hotpot-core")
-    implementation project(":hotpot-lib-file")
+    implementation project(":hotpot-staticdata")
 
     // Use the published version, uncomment this section
     // implementation "com.hotpot:hotpot-core:${version}"
-    // implementation "com.hotpot:hotpot-lib-file:${version}"
+    // implementation "com.hotpot:hotpot-staticdata:${version}"
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation "org.spockframework:spock-core:1.3-groovy-2.5"

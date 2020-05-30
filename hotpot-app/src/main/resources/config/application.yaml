@@ -9,7 +9,7 @@ hotpot:
     enabled: true
   metrics:
     enabled: true
-  static-data:
+  staticdata:
     enabled: true
     type: yaml
     metrics-location: metrics.yaml

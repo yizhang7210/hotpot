@@ -1,4 +1,4 @@
-# hotpot-lib-file
+# hotpot-staticdata
 
 This is a library for the `hotpot-core` framework. It supports file (currently `yaml`) based service, metric, and
 objective definitions.
@@ -10,14 +10,14 @@ objective definitions.
         jcenter()
     }
     dependencies {
-        implementation "com.hotpot:hotpot-lib-file:${version}"
+        implementation "com.hotpot:hotpot-staticdata:${version}"
     }
     ```
 
 1. Add the following section in your `application.yaml` or equivalent
     ```yaml
-    hotpot.static-data:
-      enabled: true                           # Required: enable the static-data library
+    hotpot.staticdata:
+      enabled: true                           # Required: enable this staticdata library
       type: yaml                              # Required: type of file the static data are in
       metrics-location: <metrics.yaml>        # Optional: location of the metrics definition file, under `resources`
       objectives-location: <objectives.yaml>  # Optional: location of the objectives definition file, under `resources`

@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ResourceLoader;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -40,8 +40,10 @@ public class YamlServiceMetricProvider implements ServiceMetricProvider {
     private Collection<ServiceMetric<?>> loadMetrics() {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
-            File metricLocation = resourceLoader.getResource(ResourceLoader.CLASSPATH_URL_PREFIX + metricsDefinitionFile).getFile();
-            return objectMapper.readValue(metricLocation, new TypeReference<List<YamlServiceMetric>>(){})
+            InputStream metrics = resourceLoader.getResource(
+                ResourceLoader.CLASSPATH_URL_PREFIX + metricsDefinitionFile
+            ).getInputStream();
+            return objectMapper.readValue(metrics, new TypeReference<List<YamlServiceMetric>>(){})
                 .stream()
                 .map(YamlServiceMetric::toServiceMetric)
                 .collect(Collectors.toList());

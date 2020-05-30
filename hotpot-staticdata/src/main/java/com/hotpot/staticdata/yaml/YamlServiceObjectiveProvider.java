@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ResourceLoader;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,12 +62,12 @@ public class YamlServiceObjectiveProvider implements ServiceObjectiveProvider {
 
     private List<YamlServiceObjective> getListedObjectives() {
         try {
-            File objectiveLocation = resourceLoader.getResource(
-                ResourceLoader.CLASSPATH_URL_PREFIX + objectivesDefinitionFile).getFile();
+            InputStream objectives = resourceLoader.getResource(
+                ResourceLoader.CLASSPATH_URL_PREFIX + objectivesDefinitionFile).getInputStream();
 
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
-            return objectMapper.readValue(objectiveLocation, new TypeReference<>() {
+            return objectMapper.readValue(objectives, new TypeReference<>() {
             });
         } catch (IOException e) {
             String message = String.format("Having trouble reading from the objectives file: %s", objectivesDefinitionFile);

@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ResourceLoader;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -58,8 +58,10 @@ public class YamlServiceProvider implements ServiceIdentityProvider, ServiceMeta
 
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
-            File servicesLocation = resourceLoader.getResource(ResourceLoader.CLASSPATH_URL_PREFIX + servicesDefinitionFile).getFile();
-            return objectMapper.readValue(servicesLocation, YamlService.class).toServices();
+            InputStream services = resourceLoader.getResource(
+                ResourceLoader.CLASSPATH_URL_PREFIX + servicesDefinitionFile
+            ).getInputStream();
+            return objectMapper.readValue(services, YamlService.class).toServices();
         } catch (IOException e) {
             String message = String.format("Having trouble reading from the services file: %s", servicesDefinitionFile);
             throw new ServiceMetaDataLoadError(message, e);

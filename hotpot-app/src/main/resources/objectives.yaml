@@ -1,4 +1,4 @@
-- id: 'documentation'
+- id: 'well-documented'
   description: Service should have publicly visible documentation
   include:
     - field: tier
@@ -13,7 +13,7 @@
       description: Specified documentation link is present
       transform: length
       condition: gt/0
-- id: 'release-cadence'
+- id: 'high-quality-release'
   description: |
     Service should maintain a reasonable release frequency while
     keeping the rollback rate low

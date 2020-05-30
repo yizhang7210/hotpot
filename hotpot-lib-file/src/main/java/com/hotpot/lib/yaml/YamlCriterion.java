@@ -101,7 +101,7 @@ public class YamlCriterion {
         if (operator == Operator.eq) {
             return tValue -> tValue.getValue().equals(Boolean.valueOf(threshold));
         }
-        throw new InvalidObjectiveError("`eq` is the only supported operators for Double");
+        throw new InvalidObjectiveError("`eq` is the only supported operators for Boolean");
     }
 
     private <T> Predicate<ServiceMetricValue<T>> stringPredicate(Operator operator, String threshold) {

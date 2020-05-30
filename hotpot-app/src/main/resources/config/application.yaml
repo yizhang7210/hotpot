@@ -9,9 +9,10 @@ hotpot:
     enabled: true
   metrics:
     enabled: true
-    provider-type: yaml
-    yaml:
-      metrics-definition: metrics.yaml
-      objectives-definition: objectives.yaml
-      services-definition: services.yaml
-      metadata-precedence: 1
+  static-data:
+    enabled: true
+    type: yaml
+    metrics-location: metrics.yaml
+    objectives-location: objectives.yaml
+    services-location: services.yaml
+    metadata-precedence: 1

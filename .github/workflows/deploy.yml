@@ -1,10 +1,8 @@
 name: Deploy demo apps
 
-#on:
-#  release:
-#    types: [published]
-
-on: push
+on:
+  release:
+    types: [published]
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -31,16 +29,35 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: build jar
+      - name: Build jar
         run: chmod +x gradlew && ./gradlew build --info
-      - name: build image
+      - name: Build image
         run: |-
           cd hotpot-app && gcloud builds submit \
             --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-      - name: deploy
+      - name: Deploy to Cloud Run
         run: |-
           gcloud run deploy "$SERVICE_NAME" \
             --region "$RUN_REGION" \
             --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
             --platform "managed" \
             --allow-unauthenticated
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '11.14'
+      - name: Get yarn
+        run: npm install -g yarn
+      - name: Download firebase
+        run: npm install -g firebase-tools
+      - name: Build bundle
+        run: cd hotpot-app-frontend && yarn install && yarn build
+      - name: Configure firebase
+        run: cd hotpot-app-frontend && firebase use "$PROJECT_ID"
+      - name: Deploy
+        run: cd hotpot-app-frontend && firebase deploy

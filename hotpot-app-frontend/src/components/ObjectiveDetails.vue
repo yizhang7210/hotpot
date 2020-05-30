@@ -54,10 +54,14 @@
       return {
         objective: {description: '', criteria: {}},
         serviceResults: null,
-        tabIndex: this.$route.query.tab || 0,
         total: 0,
         successes: 0,
         failures: 0
+      }
+    },
+    computed: {
+      tabIndex() {
+        return this.$route.query.tab || 0;
       }
     },
     mounted() {

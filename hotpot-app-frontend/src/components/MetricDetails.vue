@@ -47,8 +47,12 @@
     data() {
       return {
         details: null,
-        serviceResults: null,
-        tabIndex: this.$route.query.tab || 0
+        serviceResults: null
+      }
+    },
+    computed: {
+      tabIndex() {
+        return this.$route.query.tab || 0;
       }
     },
     mounted() {

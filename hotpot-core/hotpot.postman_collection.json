@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "c60c94f9-421a-470c-b65b-8b79a3da548e",
+		"name": "hotpot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Service IDs List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "925d2ad9-a8ca-4d9e-9ad3-4160217119c4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/serviceIds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"serviceIds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Services List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55bbdc44-525c-4a54-a4d3-e36f3b6c3485",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Service Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f521ad89-5991-4326-ab17-adcb2c96bb67",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/services/{{serviceId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"services",
+						"{{serviceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Objectives List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "498cfa61-c51b-4438-b689-2c804131a89d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/objectives",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"objectives"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Objective Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d80284fb-83dc-4b1b-b8a2-f395c3797cc1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/objectives/{{objectiveId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"objectives",
+						"{{objectiveId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Objective Results List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "979b1640-10f1-4240-a839-07532c1867ee",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/objectiveResults",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"objectiveResults"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Objective Results With Filters List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ee697ab-5836-4b69-8e0e-ed118f82edea",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/objectiveResults?q=serviceId={{serviceId}},objectiveId={{objectiveId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"objectiveResults"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "serviceId={{serviceId}},objectiveId={{objectiveId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Metrics List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60d0ba68-be5b-47e3-b7c9-f822ebfbd243",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/metrics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Metric Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1f51dd2-88b9-4373-9ae8-0821eb0250fa",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/metrics/{{metricId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"metrics",
+						"{{metricId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Metric Values List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33f06202-3d03-4ec7-8fc1-0763d08c3ab7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/metricValues",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"metricValues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Metric Values With Filters List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b33997d-53ed-4abf-93b0-180361b83386",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{base-url}}/metricValues?q=serviceId={{serviceId}},metricId={{metricId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"metricValues"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "serviceId={{serviceId}},metricId={{metricId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7a210e9f-9f67-4b04-b536-b55d62e6e141",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bcb063c5-f0aa-43da-a47f-a6fd4b7ac435",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "88e37e5e-d5ef-4039-8cb9-d867396cac6b",
+			"key": "port",
+			"value": "8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

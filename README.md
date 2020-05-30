@@ -62,6 +62,11 @@ interfaces:
 1. With metrics enabled, `curl localhost:8080/<base-ur>/metrics/values/{serviceId}` will give you all the current
 metrics for the service `serviceId`.
 
+For the complete set of endpoints, see the [public documentation](https://documenter.getpostman.com/view/5760290/SztD78JE?version=latest).
+
+Alternatively, import and run the [Postman Collection](./hotpot-core/hotpot.postman_collection.json) locally.
+
+
 ## Libraries
 Popular libraries that make running a Hotpot app even easier include:
 - [hotpot-staticdata](./hotpot-staticdata): Support file (`yaml`) based service, metric, and objective definitions

@@ -58,6 +58,9 @@ default to the identity function
 ## Web API endpoints
 All endpoints are located under the `hotpot.web-api.base-url` sub-path.
 
+To try out the API locally, import the [Postman Collection](../hotpot.postman_collection.json),
+or see the [public online version](https://documenter.getpostman.com/view/5760290/SztD78JE?version=latest).
+
 #### Defaults
 - GET `/serviceIds`: Return a list of defined service IDs
 - GET `/services`: Return a list of defined services

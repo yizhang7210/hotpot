@@ -28,7 +28,7 @@ expressed in terms of one or more `Service Metrics`, for example:
            jcenter()
        }
        dependencies {
-           implementation 'com.hotpot:hotpot-core:0.0.10'
+           implementation 'com.hotpot:hotpot-core:${version}'
        }
     ```
 1. Add the following configuration to your `application.yaml` or equivalent:
@@ -45,6 +45,11 @@ expressed in terms of one or more `Service Metrics`, for example:
     - ServiceIdentityProvider (exactly 1): to provide all the service identifiers
     - ServiceMetaDataProvider (1 or more): to provide service metadata given a service identifier
     ```
+    **Note**: Services' metadata may come from multiple sources. In Hotpot, each `ServiceMetaDataProvider` therefore
+    needs to set a `precedence`. When constructing a service from the metadata provided by the multiple providers, the
+    ones with higher precedence (larger number) will override the ones with lower precedence, if they both provide the
+    same metadata field on the same service.
+
 1. To enable service metrics, set `hotpot.metrics.enabled` to true, and create beans that implement the following
 interfaces:
     ```yaml

@@ -53,7 +53,7 @@
     },
     computed: {
       fields() {
-        return Object.keys(this.services[0]).map(k => ({key: k, sortable: true}))
+        return this.services.length > 0 && Object.keys(this.services[0]).map(k => ({key: k, sortable: true}))
       }
     },
     methods: {

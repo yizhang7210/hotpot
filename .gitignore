@@ -33,3 +33,6 @@ build
 # And of course
 node_modules/
 dist/
+
+# env secret
+hotpot.sh
